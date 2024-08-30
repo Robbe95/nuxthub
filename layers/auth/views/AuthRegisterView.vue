@@ -23,6 +23,7 @@ onSubmitForm(async (data) => {
       title: t('auth.register.error_title'),
       description: t('auth.register.error_description'),
     })
+    console.error(error)
   }
 })
 </script>

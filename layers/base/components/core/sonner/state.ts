@@ -1,4 +1,3 @@
-/* eslint-disable ts/strict-boolean-expressions */
 import type {
   ExternalToast,
   PromiseData,

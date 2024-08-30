@@ -21,6 +21,7 @@ export default defineNuxtRouteMiddleware(async () => {
     await authStore.getCurrentUser()
   }
   catch (error) {
+    console.error(error)
     userFound = false
   }
 

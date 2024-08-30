@@ -38,6 +38,7 @@ onSubmitForm(async (values) => {
       title: t('auth.forgot_password.error_title'),
       description: t('auth.forgot_password.error_description'),
     })
+    console.error(error)
   }
 })
 </script>

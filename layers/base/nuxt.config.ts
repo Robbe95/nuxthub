@@ -18,9 +18,9 @@ export default defineNuxtConfig({
     defaultLocale: 'en',
     langDir: 'locales',
     locales: [
-      { iso: 'en-US', code: 'en', file: 'en.json' },
-      { iso: 'nl-BE', code: 'nl', file: 'nl.json' },
-      { iso: 'fr-FR', code: 'fr', file: 'fr.json' },
+      { code: 'en', file: 'en.json', language: 'en-US' },
+      { code: 'nl', file: 'nl.json', language: 'nl-BE' },
+      { code: 'fr', file: 'fr.json', language: 'fr-FR' },
     ],
     strategy: 'prefix_and_default',
     vueI18n: './i18n.config.ts',
