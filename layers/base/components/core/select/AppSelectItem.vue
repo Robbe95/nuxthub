@@ -31,7 +31,7 @@ const props = defineProps<{
     >
       <!-- @vue-expect-error -->
       <template #default="{ item: itemValue }">
-        <slot :item="itemValue" />
+        <slot :item="(itemValue as TValue)" />
       </template>
     </AppSelectItem>
   </AppSelectGroup>

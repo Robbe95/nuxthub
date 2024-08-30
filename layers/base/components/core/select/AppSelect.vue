@@ -184,7 +184,7 @@ const popoverContainerClasses = computed<string>(() => selectStyle.popoverContai
                 <template #default="{ item: itemValue }">
                   <slot
                     v-if="itemValue.type === 'option'"
-                    :value="itemValue.value"
+                    :value="(itemValue.value as TValue)"
                     name="option"
                   />
                 </template>

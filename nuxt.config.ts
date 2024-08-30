@@ -1,6 +1,8 @@
 import path from 'node:path'
 
 export default defineNuxtConfig({
+  compatibilityDate: '2024-08-30',
+
   alias: {
     '@@': path.resolve(__dirname, './disable'),
     '@auth': path.resolve(__dirname, './layers/auth'),
@@ -71,6 +73,4 @@ export default defineNuxtConfig({
       failOnError: false,
     },
   },
-
-  compatibilityDate: '2024-08-30',
 })

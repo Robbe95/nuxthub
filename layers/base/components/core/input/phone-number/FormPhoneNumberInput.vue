@@ -225,7 +225,7 @@ const dialCodeDisplayValue = computed<string>(() => {
         :is-invalid="isInvalid"
         :items="countryCodes"
         :is-value-hidden="true"
-        :display-fn="() => ''"
+        :display-fn="(item: CountryCode) => item"
         :is-disabled="props.isDisabled"
         :is-required="props.isRequired"
         class="w-16"

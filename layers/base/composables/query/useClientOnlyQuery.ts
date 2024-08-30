@@ -26,7 +26,7 @@ export function useClientOnlyQuery<
   | UseQueryDefinedReturnType<TData, TError>
   | UseQueryReturnType<TData, TError> {
   const optionsValue = toValue(options)
-  const optionsEnabled = computed<boolean>(() => toValue(optionsValue.enabled) ?? true)
+  const optionsEnabled = computed<boolean>(() => toValue(optionsValue.enabled) as boolean ?? true)
   const isMounted = ref<boolean>(false)
 
   onMounted(() => {

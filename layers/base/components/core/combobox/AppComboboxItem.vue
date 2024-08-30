@@ -27,8 +27,7 @@ const props = defineProps<{
       :is-multiple="props.isMultiple"
       :display-fn="props.displayFn"
     >
-      <!-- @vue-expect-error -->
-      <template #default="{ item: itemValue }">
+      <template #default="{ item: itemValue }: any">
         <slot :item="itemValue" />
       </template>
     </AppComboboxItem>
