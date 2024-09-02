@@ -48,7 +48,10 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
 
-  hub: {},
+  hub: {
+    blob: true,
+    kv: true,
+  },
 
   i18n: {
     langDir: 'locales',
