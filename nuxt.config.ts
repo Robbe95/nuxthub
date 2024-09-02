@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     '@auth': path.resolve(__dirname, './layers/auth'),
     '@base': path.resolve(__dirname, './layers/base'),
     '@cart': path.resolve(__dirname, './layers/cart'),
+    '@server': path.resolve(__dirname, './server'),
     '~~': path.resolve(__dirname, './disable'),
   },
 
@@ -23,6 +24,13 @@ export default defineNuxtConfig({
         { name: 'description', content: '', hid: 'description' },
       ],
     },
+  },
+
+  build: {
+    transpile: [
+      'trpc-nuxt',
+      'drizzle-orm',
+    ],
   },
 
   components: [
@@ -50,6 +58,7 @@ export default defineNuxtConfig({
 
   hub: {
     blob: true,
+    database: true,
     kv: true,
   },
 
@@ -61,10 +70,10 @@ export default defineNuxtConfig({
       { code: 'fr', file: 'fr.json', language: 'fr-FR' },
     ],
   },
-
   imports: {
     scan: false,
   },
+
   modules: [
     '@nuxt/eslint',
     '@nuxthub/core',
@@ -76,6 +85,13 @@ export default defineNuxtConfig({
     },
     prerender: {
       failOnError: false,
+    },
+  },
+  runtimeConfig: {
+    dbUrl: import.meta.env.NUXT_DB_URL,
+    public: {
+      supabaseKey: import.meta.env.NUXT_SUPABASE_KEY,
+      supabaseUrl: import.meta.env.NUXT_SUPABASE_URL,
     },
   },
 })

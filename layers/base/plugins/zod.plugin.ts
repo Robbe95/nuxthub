@@ -143,6 +143,8 @@ export default defineNuxtPlugin({
       }
     }
 
-    z.setErrorMap(customErrorMap)
+    if (import.meta.client) {
+      z.setErrorMap(customErrorMap)
+    }
   },
 })

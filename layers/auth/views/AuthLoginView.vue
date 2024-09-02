@@ -7,9 +7,15 @@ import { isFetchError } from '@base/utils/api/isFetchError'
 import { useForm } from 'formango'
 import { storeToRefs } from 'pinia'
 
+import { useSupabaseClient } from '~/api/useSupabaseClient'
+import { useTrpc } from '~/api/useTrpc'
+
 const authStore = useAuthStore()
 const localeRoute = useLocaleRoute()
+const supabase = useSupabaseClient()
+const isLoading = ref<boolean>(false)
 const { lastLoggedInUser } = storeToRefs(authStore)
+const { setSession } = useTrpc()
 
 const { t } = useI18n()
 const toast = useToast()
@@ -51,7 +57,18 @@ function handleLoginError(error: unknown): void {
 
 onSubmitForm(async (data) => {
   try {
-    await authStore.login(data)
+    isLoading.value = true
+
+    const response = await supabase.auth.signInWithPassword({
+      email: data.email,
+      password: data.password,
+    })
+
+    if (response.data.session?.access_token == null) {
+      throw new Error('No access token found in response')
+    }
+
+    setSession(response.data.session)
 
     const currentUser = await authStore.getCurrentUser()
 
@@ -61,6 +78,9 @@ onSubmitForm(async (data) => {
     console.error('error', error)
     handleLoginError(error)
     authStore.setLastLoginAttemptEmail(data.email)
+  }
+  finally {
+    isLoading.value = false
   }
 })
 </script>

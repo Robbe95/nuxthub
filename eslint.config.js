@@ -11,6 +11,7 @@ export default withNuxt(
   },
   {
     rules: {
+      'node/prefer-global/process': 'off',
       'ts/explicit-function-return-type': 'off',
       'vue/no-undef-components': 'off',
     },

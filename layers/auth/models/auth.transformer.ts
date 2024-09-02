@@ -14,11 +14,9 @@ export class AuthTransformer {
   static toCurrentUser(dto: CurrentUserDto): CurrentUser {
     return {
       id: dto.id,
+      userId: dto.userId,
+      name: dto.name,
       email: dto.email,
-      firstName: dto.firstName,
-      fullName: `${dto.firstName} ${dto.lastName}`,
-      lastName: dto.lastName,
-      phone: dto.phone ?? null,
     }
   }
 
