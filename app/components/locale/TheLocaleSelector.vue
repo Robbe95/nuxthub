@@ -2,7 +2,6 @@
 import { translateLocale } from '@base/translations/locale.translate'
 import type { DropdownMenuItem } from '@base/types/core/dropdownMenuItem.type'
 import type { LocaleObject } from '@nuxtjs/i18n'
-import { AppIcon } from '@wisemen/vue-core'
 
 const { locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()

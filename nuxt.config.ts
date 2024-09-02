@@ -48,6 +48,8 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
 
+  hub: {},
+
   i18n: {
     langDir: 'locales',
     locales: [
@@ -60,9 +62,9 @@ export default defineNuxtConfig({
   imports: {
     scan: false,
   },
-
   modules: [
     '@nuxt/eslint',
+    '@nuxthub/core',
   ],
 
   nitro: {
