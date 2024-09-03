@@ -3,7 +3,6 @@ import type { CurrentUser } from '@auth/models/current-user/currentUser.model'
 import { loginFormSchema } from '@auth/models/login/loginForm.model'
 import { useAuthStore } from '@auth/stores/auth.store'
 import { useToast } from '@base/composables/core/toast.composable'
-import { isFetchError } from '@base/utils/api/isFetchError'
 import { useForm } from 'formango'
 import { storeToRefs } from 'pinia'
 
@@ -35,24 +34,19 @@ async function handleLoggedIn(user: CurrentUser): Promise<void> {
   await navigateTo(path)
 }
 
-function handleLoginError(error: unknown): void {
-  if (isFetchError(error)) {
-    form.addErrors({
-      password: {
-        _errors: [
-          t('auth.login.invalid_email_or_password'),
-        ],
-      },
-    })
+function handleLoginError(): void {
+  form.addErrors({
+    password: {
+      _errors: [
+        t('auth.login.invalid_email_or_password'),
+      ],
+    },
+  })
 
-    toast.error({
-      title: t('auth.login.error_toast.title'),
-      description: t('auth.login.error_toast.description'),
-    })
-  }
-  else {
-    throw error
-  }
+  toast.error({
+    title: t('auth.login.error_toast.title'),
+    description: t('auth.login.error_toast.description'),
+  })
 }
 
 onSubmitForm(async (data) => {
@@ -74,9 +68,8 @@ onSubmitForm(async (data) => {
 
     void handleLoggedIn(currentUser)
   }
-  catch (error) {
-    console.error('error', error)
-    handleLoginError(error)
+  catch {
+    handleLoginError()
     authStore.setLastLoginAttemptEmail(data.email)
   }
   finally {
