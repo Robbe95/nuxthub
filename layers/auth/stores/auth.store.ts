@@ -22,7 +22,7 @@ export const useAuthStore = defineStore('auth', () => {
     lastLoggedInUser.value = user
   }
 
-  async function getCurrentUser(): Promise<CurrentUser> {
+  async function getCurrentUser(): Promise<CurrentUser | null> {
     if (currentUser.value != null) {
       return currentUser.value
     }

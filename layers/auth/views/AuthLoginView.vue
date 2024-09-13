@@ -66,9 +66,14 @@ onSubmitForm(async (data) => {
 
     const currentUser = await authStore.getCurrentUser()
 
+    if (currentUser == null) {
+      throw new Error('No current user found')
+    }
+
     void handleLoggedIn(currentUser)
   }
-  catch {
+  catch (e) {
+    console.error(e)
     handleLoginError()
     authStore.setLastLoginAttemptEmail(data.email)
   }

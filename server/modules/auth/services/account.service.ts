@@ -9,8 +9,9 @@ export const accountService = {
       .select({
         id: accounts.uuid,
         userId: users.id,
-        name: accounts.name,
         email: users.email,
+        firstName: accounts.firstName,
+        lastName: accounts.lastName,
       })
       .from(accounts)
       .leftJoin(users, eq(accounts.userId, users.id))
@@ -25,8 +26,9 @@ export const accountService = {
       .select({
         id: accounts.uuid,
         userId: users.id,
-        name: accounts.name,
         email: users.email,
+        firstName: accounts.firstName,
+        lastName: accounts.lastName,
       })
       .from(accounts)
       .leftJoin(users, eq(accounts.userId, users.id))

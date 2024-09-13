@@ -6,14 +6,15 @@ import { z } from 'zod'
 export const currentUserSchema = z.object({
   id: userIdSchema,
   userId: z.string(),
-  name: z.string(),
   email: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
 })
 export const getMe = authProcedure
   .query(async ({ ctx }) => {
     const me = await accountService.me(ctx.user.id)
 
-    // const checkedSchema = currentUserSchema.parse(me)
+    const checkedSchema = currentUserSchema.parse(me)
 
-    return me
+    return checkedSchema
   })

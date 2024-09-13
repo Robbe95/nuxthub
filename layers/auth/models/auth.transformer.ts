@@ -15,8 +15,9 @@ export class AuthTransformer {
     return {
       id: dto.id,
       userId: dto.userId,
-      name: dto.name,
       email: dto.email,
+      firstName: dto.firstName,
+      lastName: dto.lastName,
     }
   }
 
