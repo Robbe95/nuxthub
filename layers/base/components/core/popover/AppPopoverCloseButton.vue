@@ -12,7 +12,7 @@ const { t } = useI18n()
       :label="t('shared.close')"
       variant="ghost"
       icon="close"
-      icon-size="default"
+      size="sm"
     />
   </PopoverClose>
 </template>

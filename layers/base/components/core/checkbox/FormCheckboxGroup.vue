@@ -9,10 +9,12 @@ import { computed } from 'vue'
 const props = withDefaults(defineProps<{
   /**
    * Whether the checkbox group is disabled.
+   * @default false
    */
   isDisabled?: boolean
   /**
    *  Whether the checkbox group is required.
+   * @default false
    */
   isRequired?: boolean
   /**
@@ -32,6 +34,10 @@ const props = withDefaults(defineProps<{
    * The options of the checkbox group.
    */
   options: DataItem<T>[]
+  /**
+   * The tooltip of the checkbox group.
+   */
+  tooltip?: string
 }>(), {
   isDisabled: false,
   isRequired: false,
@@ -67,6 +73,7 @@ function toggleOption(value: T): void {
 
 <template>
   <FormElement
+    :tooltip="props.tooltip"
     :errors="props.errors"
     :is-touched="props.isTouched"
     :label="props.label"
@@ -82,6 +89,7 @@ function toggleOption(value: T): void {
         <FormCheckbox
           :id="option.value"
           :is-disabled="props.isDisabled"
+          :data-test-id="option.testId"
           :model-value="isOptionSelected(option.value)"
           @update:model-value="toggleOption(option.value)"
         />

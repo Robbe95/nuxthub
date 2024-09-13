@@ -9,10 +9,29 @@ import type { ToastAction, ToastType } from '@base/types/core/toast.type'
 import { computed, toValue } from 'vue'
 
 const props = withDefaults(defineProps<{
+  /**
+   * The test id of the toast.
+   */
+  testId?: string
+  /**
+   * The title of the toast.
+   */
   title: string
+  /**
+   * Optional action to be displayed in the toast.
+   */
   action?: ToastAction | null
+  /**
+   * Optional description text added under the title.
+   */
   description?: null | string
+  /**
+   * The icon of the toast.
+   */
   icon: Icon
+  /**
+   * The type of the toast.
+   */
   type: ToastType
 }>(), {
   action: null,
@@ -48,7 +67,10 @@ const contentWrapperClasses = computed<string>(() => toastStyle.contentWrapper()
 </script>
 
 <template>
-  <div :class="containerClasses">
+  <div
+    :data-test-id="props.testId"
+    :class="containerClasses"
+  >
     <div :class="closeContainerClasses">
       <button
         :class="closeButtonClasses"

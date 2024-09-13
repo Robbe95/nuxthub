@@ -4,7 +4,7 @@ import AppTooltipContent from '@base/components/core/tooltip/AppTooltipContent.v
 import AppTooltipProvider from '@base/components/core/tooltip/AppTooltipProvider.vue'
 import { useTooltipStyle } from '@base/components/core/tooltip/tooltip.style'
 import { TooltipPortal, TooltipTrigger } from 'radix-vue'
-import { computed, useSlots } from 'vue'
+import { computed } from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -18,6 +18,10 @@ const props = withDefaults(
      * @default 'center'
      */
     align?: 'center' | 'end' | 'start'
+    /**
+     * The element to render the tooltip in. By default this is the viewport
+     */
+    containerElement?: HTMLElement | null
     /**
      * The content to show in the tooltip.
      * @default null
@@ -57,6 +61,7 @@ const props = withDefaults(
   {
     isHidden: false,
     align: 'center',
+    containerElement: null,
     content: null,
     delayDuration: 0,
     disableCloseOnTriggerClick: false,
@@ -67,11 +72,12 @@ const props = withDefaults(
   },
 )
 
-const slots = useSlots()
-
-if (props.content === null && slots.content === undefined) {
-  throw new Error('[TOOLTIP] Either the `content` prop or `content` slot must be provided.')
-}
+defineSlots<{
+  /** Override the content of the tooltip */
+  content: () => void
+  /** Trigger element for the toolip */
+  default: () => void
+}>()
 
 const tooltipStyle = useTooltipStyle()
 
@@ -95,6 +101,7 @@ const contentTextClasses = computed<string>(() => tooltipStyle.contentText())
         :has-arrow="!props.hideArrow"
         :offset="props.offset"
         :side="props.side"
+        :container-element="props.containerElement"
       >
         <slot name="content">
           <AppText

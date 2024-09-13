@@ -72,6 +72,10 @@ const props = withDefaults(
      * @default null
      */
     placeholder?: null | string
+    /**
+     * The tooltip of the combobox.
+     */
+    tooltip?: string
   }>(),
   {
     isDisabled: false,
@@ -79,12 +83,24 @@ const props = withDefaults(
     isRequired: false,
     isTouched: false,
     emptyText: null,
+    iconLeft: null,
+    iconRight: null,
     placeholder: null,
   },
 )
 
 const emit = defineEmits<{
   blur: []
+}>()
+
+defineSlots<{
+  /** Override the left content of the combobox input */
+  left: () => void
+  /** Override the option rendering of the combobox, and have access to the dataTestId */
+  option: (props: {
+    dataTestId?: string
+    value: TValue
+  }) => any
 }>()
 
 const model = defineModel<TValue[]>({
@@ -104,6 +120,7 @@ function onBlur(): void {
 <template>
   <FormElement
     v-slot="{ isInvalid, id }"
+    :tooltip="props.tooltip"
     :errors="props.errors"
     :is-required="props.isRequired"
     :is-touched="props.isTouched"
@@ -128,9 +145,10 @@ function onBlur(): void {
       :is-chevron-hidden="props.isChevronHidden"
       @blur="onBlur"
     >
-      <template #option="{ value }">
+      <template #option="{ value, dataTestId }">
         <slot
           :value="value"
+          :data-test-id="dataTestId"
           name="option"
         />
       </template>

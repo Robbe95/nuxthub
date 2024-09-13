@@ -31,7 +31,7 @@ const props = defineProps<{
     >
       <!-- @vue-expect-error -->
       <template #default="{ item: itemValue }">
-        <slot :item="(itemValue as TValue)" />
+        <slot :item="itemValue" />
       </template>
     </AppSelectItem>
   </AppSelectGroup>
@@ -39,6 +39,7 @@ const props = defineProps<{
   <AppSelectOption
     v-else-if="props.item.type === 'option'"
     :item="props.item"
+    :data-test-id="props.item.testId"
     :display-fn="displayFn"
   >
     <slot :item="props.item" />

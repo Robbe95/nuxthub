@@ -15,7 +15,7 @@ const dropdownMenuItems: DropdownMenuItem[] = [
   {
     items: props.item.items.map((item) => ({
       label: item.label ?? '',
-      type: 'option',
+      type: 'selectOption',
       onSelect: (): void => {
         void router.push(item.to)
       },

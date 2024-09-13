@@ -57,6 +57,10 @@ const props = withDefaults(
      * @default null
      */
     placeholder?: null | string
+    /**
+     * The tooltip of the input.
+     */
+    tooltip?: string
   }>(),
   {
     isDisabled: false,
@@ -72,6 +76,17 @@ const props = withDefaults(
 const emit = defineEmits<{
   blur: []
   filter: [value: string]
+}>()
+
+defineSlots<{
+  /** Override the option rendering of the combobox */
+  option: (props: {
+    value: TValue
+  }) => any
+  /** Override the tag rendering */
+  tag: (props: {
+    value: TValue
+  }) => any
 }>()
 
 const model = defineModel<TValue[]>({
@@ -95,6 +110,7 @@ function onFilter(filter: string): void {
 <template>
   <FormElement
     v-slot="{ isInvalid, id }"
+    :tooltip="props.tooltip"
     :errors="props.errors"
     :is-required="props.isRequired"
     :is-touched="props.isTouched"

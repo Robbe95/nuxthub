@@ -1,4 +1,5 @@
 <script setup lang="ts" generic="TValue extends AcceptableValue">
+import AppUnstyledButton from '@base/components/core/button/AppUnstyledButton.vue'
 import AppIcon from '@base/components/core/icon/AppIcon.vue'
 import AppLoader from '@base/components/core/loader/AppLoader.vue'
 import AppSelectContent from '@base/components/core/select/AppSelectContent.vue'
@@ -17,6 +18,7 @@ import {
   SelectPortal,
 } from 'radix-vue'
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const props = withDefaults(
   defineProps<{
@@ -25,6 +27,11 @@ const props = withDefaults(
      * @default null
      */
     id?: null | string
+    /**
+     * Whether the select has a clear button.
+     * @default false
+     */
+    hasClearButton?: boolean
     /**
      * Whether the select chevron is hidden.
      */
@@ -53,7 +60,7 @@ const props = withDefaults(
     /**
      * The icon to display on the left side of the select.
      */
-    iconLeft?: Icon
+    iconLeft?: Icon | null
     /**
      * The items of the select.
      */
@@ -69,12 +76,13 @@ const props = withDefaults(
   }>(),
   {
     id: null,
+    hasClearButton: false,
     isChevronHidden: false,
     isDisabled: false,
     isInvalid: false,
     isLoading: false,
     isValueHidden: false,
-    iconLeft: undefined,
+    iconLeft: null,
     placeholder: null,
   },
 )
@@ -84,9 +92,20 @@ const emit = defineEmits<{
   'update:modelValue': [value: TValue | null]
 }>()
 
+defineSlots<{
+  /** Override the display of the left icon */
+  left: () => any
+  /** Override the option rendering of the select */
+  option: (props: {
+    value: TValue
+  }) => any
+}>()
+
 const model = defineModel<TValue | null>({
   required: true,
 })
+
+const { t } = useI18n()
 
 const isOpen = ref<boolean>(false)
 
@@ -100,12 +119,21 @@ function onTriggerBlur(): void {
   }
 }
 
+function onClearButtonClick(): void {
+  emit('update:modelValue', null)
+}
+
 const selectStyle = useSelectStyle()
 
 const iconLeftClasses = computed<string>(() => selectStyle.iconLeft())
 const loaderClasses = computed<string>(() => selectStyle.loader())
 const triggerIconClasses = computed<string>(() => selectStyle.triggerIcon())
 const popoverContainerClasses = computed<string>(() => selectStyle.popoverContainer())
+const clearButtonClasses = computed<string>(() => selectStyle.clearButton())
+
+const isClearButtonVisible = computed<boolean>(() => {
+  return model.value !== null && props.hasClearButton
+})
 </script>
 
 <template>
@@ -115,51 +143,65 @@ const popoverContainerClasses = computed<string>(() => selectStyle.popoverContai
       v-model:is-open="isOpen"
       :is-disabled="props.isDisabled"
     >
-      <AppSelectTrigger
-        :id="id"
-        :is-disabled="props.isDisabled"
-        :is-invalid="props.isInvalid"
-        :class="props.selectTriggerClass"
-        @blur="onTriggerBlur"
-      >
-        <slot name="left">
-          <AppIcon
-            v-if="props.iconLeft !== undefined"
-            :icon="props.iconLeft"
-            :class="iconLeftClasses"
-          />
-        </slot>
-
-        <AppSelectValue
-          v-if="!isValueHidden"
-          :is-empty="model === null"
+      <div class="relative size-full">
+        <AppSelectTrigger
+          :id="id"
+          :is-disabled="props.isDisabled"
+          :is-invalid="props.isInvalid"
+          :class="props.selectTriggerClass"
+          @blur="onTriggerBlur"
         >
-          <template v-if="placeholder !== null && model === null">
-            {{ props.placeholder }}
-          </template>
+          <slot name="left">
+            <AppIcon
+              v-if="props.iconLeft !== null"
+              :icon="props.iconLeft"
+              :class="iconLeftClasses"
+            />
+          </slot>
 
-          <template v-else-if="model !== null">
-            {{ props.displayFn(model) }}
-          </template>
-        </AppSelectValue>
+          <AppSelectValue
+            v-if="!isValueHidden"
+            :is-empty="model === null"
+            :class="{
+              'pr-8': isClearButtonVisible,
+            }"
+          >
+            <template v-if="placeholder !== null && model === null">
+              {{ props.placeholder }}
+            </template>
 
-        <AppLoader
-          v-if="props.isLoading"
-          :class="loaderClasses"
-        />
+            <template v-else-if="model !== null">
+              {{ props.displayFn(model) }}
+            </template>
+          </AppSelectValue>
 
-        <SelectIcon
-          v-else-if="!isChevronHidden"
-          :as-child="true"
-          class="mr-3"
-        >
-          <AppIcon
-            :class="triggerIconClasses"
-            icon="chevronDown"
-            size="sm"
+          <AppLoader
+            v-if="props.isLoading"
+            :class="loaderClasses"
           />
-        </SelectIcon>
-      </AppSelectTrigger>
+
+          <SelectIcon
+            v-else-if="!isChevronHidden"
+            :as-child="true"
+            class="mr-3"
+          >
+            <AppIcon
+              :class="triggerIconClasses"
+              icon="chevronDown"
+              size="sm"
+            />
+          </SelectIcon>
+        </AppSelectTrigger>
+
+        <AppUnstyledButton
+          v-if="isClearButtonVisible"
+          :label="t('shared.clear')"
+          :class="clearButtonClasses"
+          @click="onClearButtonClick"
+        >
+          <AppIcon icon="close" />
+        </AppUnstyledButton>
+      </div>
 
       <SelectPortal>
         <Transition
@@ -184,7 +226,7 @@ const popoverContainerClasses = computed<string>(() => selectStyle.popoverContai
                 <template #default="{ item: itemValue }">
                   <slot
                     v-if="itemValue.type === 'option'"
-                    :value="(itemValue.value as TValue)"
+                    :value="itemValue.value"
                     name="option"
                   />
                 </template>

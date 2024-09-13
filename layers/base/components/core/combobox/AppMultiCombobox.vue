@@ -92,8 +92,8 @@ const props = withDefaults(
     isInvalid: false,
     isLoading: false,
     emptyText: null,
-    iconLeft: undefined,
-    iconRight: undefined,
+    iconLeft: null,
+    iconRight: null,
     placeholder: null,
     popoverProps: null,
   },
@@ -102,6 +102,20 @@ const props = withDefaults(
 const emit = defineEmits<{
   'blur': []
   'update:modelValue': [value: TValue[]]
+}>()
+
+defineSlots<{
+  /** Override the empty state of the combobox dropdown */
+  empty: () => void
+  /** Override the left content of the combobox input */
+  left: () => void
+  /** Override the option rendering of the combobox, and have access to the dataTestId */
+  option: (props: {
+    dataTestId?: string
+    value: TValue
+  }) => any
+  /** Override the right content of the combobox input */
+  right: () => void
 }>()
 
 const searchModel = defineModel<null | string>('search', {
@@ -164,8 +178,9 @@ function onBlur(): void {
       <ComboboxAnchor>
         <AppComboboxInput
           :id="props.id"
-          :icon-left="props.iconLeft ?? null"
-          :icon-right="props.iconRight ?? null"
+          :icon-left="props.iconLeft"
+          :icon-right="props.iconRight"
+          :has-clear-button="false"
           :is-chevron-hidden="props.isChevronHidden"
           :is-disabled="props.isDisabled"
           :is-invalid="props.isInvalid"
@@ -214,6 +229,7 @@ function onBlur(): void {
                     <slot
                       v-if="itemValue.type === 'option'"
                       :value="itemValue.value"
+                      :data-test-id="itemValue.testId"
                       name="option"
                     />
                   </template>

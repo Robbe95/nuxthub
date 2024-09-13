@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppDropdownMenuRadio from '@base/components/core/dropdown-menu/AppDropdownMenuRadio.vue'
+import AppDropdownMenuRadio from '@base/components/core/dropdown-menu/option/AppDropdownMenuRadioOption.vue'
 import type { DropdownMenuRadioGroup as DropdownMenuRadioGroupType } from '@base/types/core/dropdownMenuItem.type'
 import { DropdownMenuRadioGroup } from 'radix-vue'
 
@@ -16,6 +16,7 @@ const props = defineProps<{
     <AppDropdownMenuRadio
       v-for="(radioItem, i) of props.item.items"
       :key="i"
+      :data-test-id="radioItem.testId"
       :item="radioItem"
     />
   </DropdownMenuRadioGroup>

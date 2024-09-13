@@ -12,6 +12,11 @@ import { useI18n } from 'vue-i18n'
 const props = withDefaults(
   defineProps<{
     /**
+     * The test id of the input.
+     * @default undefined
+     */
+    testId?: string
+    /**
      * Whether the input is disabled.
      */
     isDisabled?: boolean
@@ -46,13 +51,17 @@ const props = withDefaults(
      * @default null
      */
     placeholder?: null | string
+    /**
+     * The tooltip of the input.
+     */
+    tooltip?: string
   }>(),
   {
     isDisabled: false,
     isLoading: false,
     isRequired: false,
     isTouched: false,
-    iconLeft: undefined,
+    iconLeft: null,
     placeholder: null,
   },
 )
@@ -95,15 +104,17 @@ const passwordIconClasses = computed<string>(() => inputStyle.passwordIcon())
     :is-touched="props.isTouched"
     :is-disabled="props.isDisabled"
     :label="props.label"
+    :tooltip="props.tooltip"
   >
     <AppInput
       :id="id"
       v-model="model"
       :type="inputType"
       :is-disabled="props.isDisabled"
+      :test-id="props.testId"
       :is-invalid="isInvalid"
       :placeholder="props.placeholder"
-      :icon-left="props.iconLeft ?? undefined"
+      :icon-left="props.iconLeft"
       :is-loading="props.isLoading"
       @focus="onFocus"
       @blur="onBlur"

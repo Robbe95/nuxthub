@@ -13,6 +13,11 @@ import { computed, useSlots } from 'vue'
 const props = withDefaults(
   defineProps<{
     /**
+     * Whether the close button is hidden.
+     * @default 'false'
+     */
+    isCloseButtonHidden?: boolean
+    /**
      * The alignment of the popover content.
      * @default 'center'
      */
@@ -34,12 +39,20 @@ const props = withDefaults(
     side?: 'bottom' | 'left' | 'right' | 'top'
   }>(),
   {
+    isCloseButtonHidden: false,
     align: 'center',
     hideArrow: false,
     offset: 10,
     side: 'bottom',
   },
 )
+
+defineSlots<{
+  /** Content of the popover */
+  content: () => void
+  /** Trigger element for the popover */
+  default: () => void
+}>()
 
 const slots = useSlots()
 
@@ -62,7 +75,6 @@ const arrowClasses = computed<string>(() => popoverStyle.arrow())
     </AppPopoverTrigger>
 
     <PopoverPortal>
-      <!-- eslint-disable tailwindcss/no-custom-classname -->
       <PopoverContent
         :align="props.align"
         :has-arrow="!props.hideArrow"
@@ -70,8 +82,10 @@ const arrowClasses = computed<string>(() => popoverStyle.arrow())
         :side-offset="props.offset"
         :class="contentClasses"
       >
-        <!-- eslint-enable tailwindcss/no-custom-classname -->
-        <AppPopoverCloseButton :class="closeButtonContainerClasses" />
+        <AppPopoverCloseButton
+          v-if="props.isCloseButtonHidden !== true"
+          :class="closeButtonContainerClasses"
+        />
 
         <slot name="content" />
 

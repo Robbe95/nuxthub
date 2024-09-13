@@ -7,6 +7,7 @@ import { computed } from 'vue'
 const props = defineProps<{
   hasArrow: boolean
   align: 'center' | 'end' | 'start'
+  containerElement: HTMLElement | null
   offset: number
 }>()
 
@@ -21,6 +22,9 @@ const contentClasses = computed<string>(() => tooltipStyle.content())
     :arrow-padding="12"
     :side-offset="props.offset"
     :class="contentClasses"
+    :collision-boundary="props.containerElement"
+    :hide-when-detached="true"
+    sticky="always"
   >
     <slot />
 

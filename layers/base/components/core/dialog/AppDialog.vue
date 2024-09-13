@@ -14,8 +14,7 @@ import {
 
 const props = withDefaults(defineProps<{
   /**
-   * The id of the element that triggers the dialog.
-   * Will be set automatically when using the `useDialog` composable
+   * The id of the element that triggers the dialog: Will be set automatically when using the `useDialog` composable
    * @default null
    */
   triggerId?: null | string
@@ -43,6 +42,11 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{
   close: []
+}>()
+
+defineSlots<{
+  /** Content of the dialog */
+  default: () => void
 }>()
 
 const isOpen = defineModel<boolean>('isOpen', {
@@ -76,17 +80,13 @@ function getDialogElement(): HTMLElement {
 function animateInWithViewTransitionsApi(): void {
   const trigger = getTriggerElement()
 
-  if (document.startViewTransition == null) {
-    return
-  }
-
   if (trigger === null) {
     throw new Error('[AppDialog] No trigger element found')
   }
 
   trigger.style.viewTransitionName = 'dialog'
 
-  const transition = document.startViewTransition(async () => {
+  const transition = document?.startViewTransition?.(async () => {
     isActuallyOpen.value = true
 
     await nextTick()
@@ -99,7 +99,7 @@ function animateInWithViewTransitionsApi(): void {
     dialog.style.viewTransitionName = 'dialog'
   })
 
-  void transition.finished.finally(() => {
+  void transition?.finished.finally(() => {
     const dialog = getDialogElement()
 
     dialog.style.viewTransitionName = ''
@@ -109,10 +109,6 @@ function animateInWithViewTransitionsApi(): void {
 function animateOutWithViewTransitionsApi(): void {
   const trigger = getTriggerElement()
 
-  if (document.startViewTransition == null) {
-    return
-  }
-
   if (trigger === null) {
     throw new Error('[AppDialog] No trigger element found')
   }
@@ -121,7 +117,7 @@ function animateOutWithViewTransitionsApi(): void {
 
   dialog.style.viewTransitionName = 'dialog-leave'
 
-  const transition = document.startViewTransition(() => {
+  const transition = document?.startViewTransition?.(() => {
     dialog.style.viewTransitionName = ''
 
     trigger.style.viewTransitionName = 'dialog-leave'
@@ -130,7 +126,7 @@ function animateOutWithViewTransitionsApi(): void {
     isActuallyOpen.value = false
   })
 
-  void transition.finished.finally(() => {
+  void transition?.finished.finally(() => {
     trigger.style.viewTransitionName = ''
   })
 }

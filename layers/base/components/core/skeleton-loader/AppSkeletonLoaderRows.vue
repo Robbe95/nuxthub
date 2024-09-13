@@ -5,6 +5,9 @@ import { computed } from 'vue'
 
 const props = withDefaults(
   defineProps<{
+  /**
+   * The number of skeleton rows to show
+   */
     rows?: number
   }>(),
   {

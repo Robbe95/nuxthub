@@ -1,5 +1,6 @@
 import { AuthTransformer } from '@auth/models/auth.transformer'
 import type { CurrentUser } from '@auth/models/current-user/currentUser.model'
+import { currentUserDtoSchema } from '@auth/models/current-user/currentUserDto.model'
 import type { ForgotPasswordForm } from '@auth/models/forgot-password/forgotPasswordForm.model'
 import type { RegisterForm } from '@auth/models/register/registerForm.model'
 import type { ResetPasswordForm } from '@auth/models/reset-password/resetPasswordForm.model'
@@ -23,8 +24,9 @@ export class AuthService {
     const { trpc } = useTrpc()
 
     const data = await trpc.auth.getMe.query()
+    const currentUserDto = currentUserDtoSchema.parse(data)
 
-    return AuthTransformer.toCurrentUser(data)
+    return AuthTransformer.toCurrentUser(currentUserDto)
   }
 
   static async register(form: RegisterForm): Promise<void> {

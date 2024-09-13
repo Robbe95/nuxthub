@@ -13,6 +13,11 @@ const props = withDefaults(defineProps<{
    */
   id?: null | string
   /**
+   * The test id of the input.
+   * @default null
+   */
+  testId?: null | string
+  /**
    * Whether the input is disabled.
    * @default false
    */
@@ -27,15 +32,20 @@ const props = withDefaults(defineProps<{
    */
   isLoading?: boolean
   /**
+   * Whether the input is readonly.
+   * @default false
+   */
+  isReadonly?: boolean
+  /**
    * The left icon of the input.
    * @default null
    */
-  iconLeft?: Icon
+  iconLeft?: Icon | null
   /**
    * The right icon of the input.
    * @default null
    */
-  iconRight?: Icon
+  iconRight?: Icon | null
   /**
    * The placeholder of the input.
    * @default null
@@ -48,14 +58,23 @@ const props = withDefaults(defineProps<{
   type?: 'date' | 'datetime-local' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'time' | 'url'
 }>(), {
   id: null,
+  testId: null,
   isDisabled: false,
   isInvalid: false,
   isLoading: false,
-  iconLeft: undefined,
-  iconRight: undefined,
+  isReadonly: false,
+  iconLeft: null,
+  iconRight: null,
   placeholder: null,
   type: 'text',
 })
+
+defineSlots<{
+  /** Replace the left icon with custom content */
+  left: () => void
+  /** Replace the right icon with custom content */
+  right: () => void
+}>()
 
 const model = defineModel<null | string>({
   required: true,
@@ -82,13 +101,13 @@ const loaderClasses = computed<string>(() => inputStyle.loader())
     :aria-disabled="props.isDisabled"
     :class="containerClasses"
   >
-    <Component
-      :is="slots.left"
+    <slot
       v-if="slots.left !== undefined"
+      name="left"
     />
 
     <AppIcon
-      v-else-if="props.iconLeft !== null && props.iconLeft !== undefined"
+      v-else-if="props.iconLeft !== null"
       :icon="props.iconLeft"
       :class="leftIconClasses"
     />
@@ -99,6 +118,8 @@ const loaderClasses = computed<string>(() => inputStyle.loader())
       :id="props.id ?? undefined"
       v-model="model"
       :type="props.type"
+      :readonly="props.isReadonly"
+      :data-test-id="props.testId"
       :aria-invalid="props.isInvalid"
       :disabled="props.isDisabled"
       :placeholder="props.placeholder ?? undefined"
@@ -110,15 +131,25 @@ const loaderClasses = computed<string>(() => inputStyle.loader())
       :class="loaderClasses"
     />
 
-    <Component
-      :is="slots.right"
+    <slot
       v-else-if="slots.right !== undefined"
+      name="right"
     />
 
     <AppIcon
-      v-else-if="props.iconRight !== null && props.iconRight !== undefined"
+      v-else-if="props.iconRight !== null"
       :icon="props.iconRight"
       :class="rightIconClasses"
     />
   </label>
 </template>
+
+<style lang="postcss" scoped>
+input::-webkit-datetime-edit {
+  @apply h-full
+}
+
+input::-webkit-datetime-edit-fields-wrapper {
+  @apply flex items-center h-full
+}
+</style>

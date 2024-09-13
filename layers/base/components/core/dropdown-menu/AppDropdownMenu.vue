@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import AppDropdownMenuContent from '@base/components/core/dropdown-menu/AppDropdownMenuContent.vue'
 import AppDropdownMenuItem from '@base/components/core/dropdown-menu/AppDropdownMenuItem.vue'
-import { useKeyboardShortcut } from '@base/composables/core/keyboardShortcut.composable'
+import { useKeyboardShortcut } from '@base/composables/core/keyboard-shortcut/keyboardShortcut.composable'
 import type {
-  DropdownMenuCheckbox,
+  DropdownMenuCheckboxOption,
   DropdownMenuItem,
-  DropdownMenuOption,
+  DropdownMenuRouteOption,
+  DropdownMenuSelectOption,
 } from '@base/types/core/dropdownMenuItem.type'
 import {
   DropdownMenuPortal,
@@ -19,7 +20,7 @@ import {
   watch,
 } from 'vue'
 
-type ItemsWithKeyboardShortcuts = DropdownMenuCheckbox | DropdownMenuOption
+type ItemsWithKeyboardShortcuts = DropdownMenuCheckboxOption | DropdownMenuRouteOption | DropdownMenuSelectOption
 
 const props = withDefaults(
   defineProps<{
@@ -67,6 +68,15 @@ const props = withDefaults(
   },
 )
 
+defineSlots<{
+  /** Trigger element to show the dropdown items */
+  default: () => void
+  /** Optional footer content in the dropdown, after the dropdown items */
+  footer: () => void
+  /** Optional header content in the dropdown, before the dropdown items */
+  header: () => void
+}>()
+
 const dropdownMenuTriggerRef = ref<InstanceType<typeof DropdownMenuTrigger> | null>(null)
 const isOpen = ref<boolean>(false)
 
@@ -86,7 +96,11 @@ function getAllItems(items: DropdownMenuItem[]): DropdownMenuItem[] {
 
 const itemsWithKeyboardShortcuts = computed<ItemsWithKeyboardShortcuts[]>(() => {
   return getAllItems(props.items)
-    .filter((item) => item.type === 'option' || item.type === 'checkbox') as ItemsWithKeyboardShortcuts[]
+    .filter((item) => {
+      return item.type === 'selectOption'
+        || item.type === 'checkboxOption'
+        || item.type === 'routeOption'
+    }) as ItemsWithKeyboardShortcuts[]
 })
 
 let keyboardShortcutsUnbindFns: (() => void)[] = []
@@ -104,7 +118,7 @@ onMounted(() => {
       itemsWithKeyboardShortcuts.value.forEach((item) => {
         const { keyboardShortcutKeys } = item
 
-        if (item.type !== 'option') {
+        if (item.type !== 'selectOption') {
           return
         }
 

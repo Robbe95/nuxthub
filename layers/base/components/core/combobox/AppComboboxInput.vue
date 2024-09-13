@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AppUnstyledButton from '@base/components/core/button/AppUnstyledButton.vue'
 import { useComboboxStyle } from '@base/components/core/combobox/combobox.style'
 import AppIcon from '@base/components/core/icon/AppIcon.vue'
 import AppLoader from '@base/components/core/loader/AppLoader.vue'
@@ -8,9 +9,11 @@ import {
   ComboboxTrigger,
 } from 'radix-vue'
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 const props = withDefaults(defineProps<{
   id: null | string
+  hasClearButton: boolean
   isChevronHidden: boolean
   isDisabled: boolean
   isInvalid: boolean
@@ -25,7 +28,10 @@ const props = withDefaults(defineProps<{
 
 const emit = defineEmits<{
   blur: []
+  clear: []
 }>()
+
+const { t } = useI18n()
 
 const isFocused = ref<boolean>(false)
 
@@ -50,6 +56,10 @@ function onBlur(): void {
   isFocused.value = false
   emit('blur')
 }
+
+function onClearButtonClick(): void {
+  emit('clear')
+}
 </script>
 
 <template>
@@ -59,6 +69,7 @@ function onBlur(): void {
         v-if="props.iconLeft !== null && props.iconLeft !== undefined"
         :icon="props.iconLeft"
         :class="iconClasses"
+        class="ml-3"
       />
     </slot>
 
@@ -70,6 +81,14 @@ function onBlur(): void {
       @focus="onFocus"
       @keydown.enter.prevent
     />
+
+    <AppUnstyledButton
+      v-if="props.hasClearButton"
+      :label="t('shared.clear')"
+      @click.stop="onClearButtonClick"
+    >
+      <AppIcon icon="close" />
+    </AppUnstyledButton>
 
     <AppLoader
       v-if="props.isLoading"
@@ -90,7 +109,7 @@ function onBlur(): void {
 
       <ComboboxTrigger
         v-else-if="!props.isChevronHidden"
-        class="mr-1 p-2"
+        class="mr-1 flex flex-row gap-2 p-2"
       >
         <AppIcon
           :class="iconClasses"

@@ -11,6 +11,11 @@ import type {
 const props = withDefaults(
   defineProps<{
     /**
+     * Whether the select has a clear button.
+     * @default false
+     */
+    hasClearButton?: boolean
+    /**
      * Whether the select is disabled.
      */
     isDisabled?: boolean
@@ -37,7 +42,7 @@ const props = withDefaults(
     /**
      * The icon to display on the left side of the select.
      */
-    iconLeft?: Icon
+    iconLeft?: Icon | null
     /**
      * The items of the select.
      */
@@ -51,17 +56,33 @@ const props = withDefaults(
      * @default null
      */
     placeholder?: null | string
+    /**
+     * The tooltip of the input.
+     */
+    tooltip?: string
   }>(),
-  { isDisabled: false,
+  {
+    hasClearButton: false,
+    isDisabled: false,
     isLoading: false,
     isRequired: false,
     isTouched: false,
-    iconLeft: undefined,
-    placeholder: null },
+    iconLeft: null,
+    placeholder: null,
+  },
 )
 
 const emit = defineEmits<{
   blur: []
+}>()
+
+defineSlots<{
+  /** Override the display of the left icon */
+  left: () => any
+  /** Override the option rendering of the select */
+  option: (props: {
+    value: AcceptableValue
+  }) => any
 }>()
 
 const model = defineModel<TValue | null>({
@@ -77,6 +98,7 @@ function onBlur(): void {
   <FormElement
     v-slot="{ isInvalid, id }"
     :errors="props.errors"
+    :tooltip="props.tooltip"
     :is-required="props.isRequired"
     :is-touched="props.isTouched"
     :is-disabled="props.isDisabled"
@@ -92,6 +114,7 @@ function onBlur(): void {
       :is-disabled="props.isDisabled"
       :is-required="props.isRequired"
       :is-loading="props.isLoading"
+      :has-clear-button="props.hasClearButton"
       :placeholder="props.placeholder"
       @blur="onBlur"
     >

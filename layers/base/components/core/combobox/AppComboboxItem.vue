@@ -19,6 +19,8 @@ const props = defineProps<{
   <AppComboboxGroup
     v-else-if="props.item.type === 'group'"
     :label="props.item.label"
+    :size="props.item.size"
+    :icon="props.item.icon"
   >
     <AppComboboxItem
       v-for="(groupItem, i) of props.item.items"
@@ -27,7 +29,8 @@ const props = defineProps<{
       :is-multiple="props.isMultiple"
       :display-fn="props.displayFn"
     >
-      <template #default="{ item: itemValue }: any">
+      <!-- @vue-expect-error -->
+      <template #default="{ item: itemValue }">
         <slot :item="itemValue" />
       </template>
     </AppComboboxItem>
@@ -36,6 +39,7 @@ const props = defineProps<{
   <AppComboboxOption
     v-else-if="props.item.type === 'option' && !isMultiple"
     :item="props.item"
+    :data-test-id="props.item.testId"
     :display-fn="props.displayFn"
   >
     <slot :item="props.item" />
@@ -44,6 +48,7 @@ const props = defineProps<{
   <AppMultiComboboxOption
     v-else-if="props.item.type === 'option' && isMultiple"
     :item="props.item"
+    :data-test-id="props.item.testId"
     :display-fn="props.displayFn"
   >
     <slot :item="props.item" />

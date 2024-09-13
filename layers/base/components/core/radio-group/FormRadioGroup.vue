@@ -38,6 +38,10 @@ const props = withDefaults(defineProps<{
    * The options of the radio group.
    */
   options: DataItem<T>[]
+  /**
+   * The tooltip of the input.
+   */
+  tooltip?: string
 }>(), {
   isDisabled: false,
   isRequired: false,
@@ -69,12 +73,17 @@ const itemIndicatorClasses = computed<string>(() => radioGroupStyle.itemIndicato
 const itemTextClasses = computed<string>(() => radioGroupStyle.itemText())
 const itemWrapperClasses = computed<string>(() => radioGroupStyle.itemWrapper())
 const itemsContainerClasses = computed<string>(() => radioGroupStyle.itemsContainer())
+
+function removeQuotes(value: string): string {
+  return value.replace(/"/g, '')
+}
 </script>
 
 <template>
   <FormElement
     :errors="props.errors"
     :is-touched="props.isTouched"
+    :tooltip="props.tooltip"
     :label="props.label"
     :is-disabled="props.isDisabled"
     :is-required="props.isRequired"
@@ -87,7 +96,8 @@ const itemsContainerClasses = computed<string>(() => radioGroupStyle.itemsContai
           :class="itemsContainerClasses"
         >
           <FormRadioGroupItem
-            :id="option.value"
+            :id="removeQuotes(option.value)"
+            :data-test-id="option.testId"
             :value="option.value"
             :class="itemWrapperClasses"
           >
@@ -95,7 +105,7 @@ const itemsContainerClasses = computed<string>(() => radioGroupStyle.itemsContai
           </FormRadioGroupItem>
 
           <label
-            :for="option.value"
+            :for="removeQuotes(option.value)"
             :class="itemTextClasses"
           >
             {{ option.label }}

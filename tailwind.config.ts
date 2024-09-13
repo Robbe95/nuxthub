@@ -42,27 +42,31 @@ export default {
       },
 
       colors: {
-        accent: {
+        'accent': {
           DEFAULT: 'rgba(var(--accent), <alpha-value>)',
           foreground: 'rgba(var(--accent-foreground), <alpha-value>)',
         },
-        background: 'rgba(var(--background), <alpha-value>)',
-        black: 'rgba(var(--black), <alpha-value>)',
+        'background': 'rgba(var(--background), <alpha-value>)',
+        'black': 'rgba(var(--black), <alpha-value>)',
 
-        border: 'rgba(var(--border), <alpha-value>)',
+        'border': 'rgba(var(--border), <alpha-value>)',
 
-        card: {
+        'card': {
           DEFAULT: 'rgba(var(--card), <alpha-value>)',
           foreground: 'rgba(var(--card-foreground), <alpha-value>)',
         },
 
-        destructive: {
+        'destructive': {
           DEFAULT: 'rgba(var(--destructive), <alpha-value>)',
           foreground: 'rgba(var(--destructive-foreground), <alpha-value>)',
         },
-        foreground: 'rgba(var(--foreground), <alpha-value>)',
+        'foreground': 'rgba(var(--foreground), <alpha-value>)',
 
-        input: {
+        'form-label': {
+          foreground: 'rgba(var(--form-label-foreground), <alpha-value>)',
+        },
+
+        'input': {
           DEFAULT: 'rgba(var(--input), <alpha-value>)',
           border: 'rgba(var(--input-border), <alpha-value>)',
           disabled: 'rgba(var(--input-disabled), <alpha-value>)',
@@ -71,13 +75,12 @@ export default {
           ring: 'rgba(var(--input-ring), <alpha-value>)',
         },
 
-        muted: {
+        'muted': {
           DEFAULT: 'rgba(var(--muted), <alpha-value>)',
           background: 'rgba(var(--muted-background), <alpha-value>)',
           foreground: 'rgba(var(--muted-foreground), <alpha-value>)',
         },
-
-        neutral: {
+        'neutral': {
           100: 'rgba(var(--neutral-100), <alpha-value>)',
           200: 'rgba(var(--neutral-200), <alpha-value>)',
           300: 'rgba(var(--neutral-300), <alpha-value>)',
@@ -88,35 +91,35 @@ export default {
           800: 'rgba(var(--neutral-800), <alpha-value>)',
           900: 'rgba(var(--neutral-900), <alpha-value>)',
         },
-        popover: {
+        'popover': {
           DEFAULT: 'rgba(var(--popover), <alpha-value>)',
           foreground: 'rgba(var(--popover-foreground), <alpha-value>)',
         },
-        primary: {
+        'primary': {
           DEFAULT: 'rgba(var(--primary), <alpha-value>)',
           foreground: 'rgba(var(--primary-foreground), <alpha-value>)',
         },
-        ring: 'rgba(var(--ring), <alpha-value>)',
-        secondary: {
+        'ring': 'rgba(var(--ring), <alpha-value>)',
+        'secondary': {
           DEFAULT: 'rgba(var(--secondary), <alpha-value>)',
           foreground: 'rgba(var(--secondary-foreground), <alpha-value>)',
         },
-        success: {
+        'success': {
           DEFAULT: 'rgba(var(--success), <alpha-value>)',
           foreground: 'rgba(var(--success-foreground), <alpha-value>)',
         },
-        switch: {
+        'switch': {
           background: 'rgba(var(--switch-background), <alpha-value>)',
           foreground: 'rgba(var(--switch-foreground), <alpha-value>)',
         },
-        transparent: 'transparent',
 
-        warning: {
+        'transparent': 'transparent',
+        'warning': {
           DEFAULT: 'rgba(var(--warning), <alpha-value>)',
           foreground: 'rgba(var(--warning-foreground), <alpha-value>)',
         },
 
-        white: 'rgba(var(--white), <alpha-value>)',
+        'white': 'rgba(var(--white), <alpha-value>)',
       },
 
       fontFamily: {},
@@ -166,8 +169,23 @@ export default {
         ],
       },
 
+      fontWeight: {
+        'form-label': 'var(--form-label-font-weight)',
+      },
+
       gridTemplateColumns: {
         'table-skeleton': '1fr 4fr 2fr 1fr',
+      },
+
+      keyframes: {
+        slideDown: {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        slideUp: {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
+        },
       },
 
       maxWidth: {

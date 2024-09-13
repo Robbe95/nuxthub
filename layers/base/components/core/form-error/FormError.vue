@@ -7,7 +7,13 @@ import type { FormFieldErrors } from '@base/types/core/formFieldErrors.type'
 import { computed } from 'vue'
 
 const props = defineProps<{
+  /**
+   *  Whether the error is visible
+   */
   isVisible: boolean
+  /**
+   *  The errors to display
+   */
   errors: FormFieldErrors
 }>()
 

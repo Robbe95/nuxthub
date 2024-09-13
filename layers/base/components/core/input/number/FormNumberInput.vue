@@ -65,6 +65,10 @@ const props = withDefaults(
      * @default null
      */
     suffix?: null | string
+    /**
+     * The tooltip of the input.
+     */
+    tooltip?: string
   }>(),
   {
     isDisabled: false,
@@ -72,7 +76,7 @@ const props = withDefaults(
     isRequired: false,
     isTouched: false,
     hideControls: false,
-    iconLeft: undefined,
+    iconLeft: null,
     max: null,
     min: 0,
     placeholder: null,
@@ -83,6 +87,13 @@ const props = withDefaults(
 const emit = defineEmits<{
   blur: []
   focus: []
+}>()
+
+defineSlots<{
+  /** Optional content on the left of the input (overrides the rendering of the left Icon) */
+  left: () => void
+  /** Optional content on the right of the input (to the right of the increment/decrement controls) */
+  right: () => void
 }>()
 
 const model = defineModel<null | number>({
@@ -107,6 +118,7 @@ const numberSuffixClasses = computed<string>(() => inputStyle.numberSuffix())
 <template>
   <FormElement
     v-slot="{ isInvalid, id }"
+    :tooltip="props.tooltip"
     :class="classAttr"
     :errors="props.errors"
     :is-required="props.isRequired"

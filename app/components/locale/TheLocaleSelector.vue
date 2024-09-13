@@ -13,7 +13,7 @@ const availableLocales = computed<LocaleObject[]>(() => {
 const dropdownItems = computed<DropdownMenuItem[]>(() => {
   return availableLocales.value.map((i) => ({
     label: translateLocale(i.code),
-    type: 'option',
+    type: 'selectOption',
     onSelect: () => {
       void navigateTo(switchLocalePath(i.code))
     },

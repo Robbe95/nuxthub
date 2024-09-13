@@ -1,3 +1,4 @@
+import type { DropdownMenuStyleProps } from '@base/components/core/dropdown-menu/dropdownMenu.style'
 import type { Icon } from '@base/icons/icons'
 import type { KeyboardKey } from '@base/types/core/keyboard.type'
 import type { AcceptableValue } from '@base/types/core/selectItem.type'
@@ -5,7 +6,7 @@ import type {
   Ref,
   VNode,
 } from 'vue'
-import type { RouteLocationRaw } from 'vue-router'
+import type { RouteLocationNamedRaw } from 'vue-router'
 
 export interface DropdownMenuDivider {
   type: 'divider'
@@ -29,55 +30,57 @@ export interface DropdownMenuGroup {
   type: 'group'
 }
 
+export interface DropdownMenuRenderOption {
+  render: () => VNode
+  type: 'renderOption'
+}
+
 interface DropdownMenuBaseOption {
+  testId?: string
+  isDisabled?: boolean
+  isHidden?: boolean
   icon?: Icon
   keyboardShortcutKeys?: KeyboardKey[]
   label: string
-  render?: () => VNode
+  variant?: DropdownMenuStyleProps['variant']
 }
 
 export interface DropdownMenuSelectOption extends DropdownMenuBaseOption {
-  type: 'option'
+  type: 'selectOption'
   onSelect: () => void
 }
 
 export interface DropdownMenuRouteOption extends DropdownMenuBaseOption {
   target?: string
-  to: RouteLocationRaw
+  to: RouteLocationNamedRaw
   type: 'routeOption'
 }
 
-export type DropdownMenuOption = DropdownMenuRouteOption | DropdownMenuSelectOption
-
-export interface DropdownMenuCheckbox {
+export interface DropdownMenuCheckboxOption extends DropdownMenuBaseOption {
   isSelected: Ref<boolean>
-  keyboardShortcutKeys?: KeyboardKey[]
-  label: string
-  render?: () => VNode
-  type: 'checkbox'
+  type: 'checkboxOption'
   onSelect: () => void
 }
 
 export interface DropdownMenuRadioGroup {
-  items: DropdownMenuRadio[]
+  items: DropdownMenuRadioOption[]
   modelValue: Ref<AcceptableValue | null>
   type: 'radioGroup'
   updateModelValue: (value: AcceptableValue) => void
 }
 
-export interface DropdownMenuRadio {
-  keyboardShortcutKeys?: KeyboardKey[]
-  label: string
-  render?: () => VNode
-  type: 'radio'
+export interface DropdownMenuRadioOption extends DropdownMenuBaseOption {
+  type: 'radioOption'
   value: AcceptableValue
 }
 
-export type DropdownMenuItem = DropdownMenuCheckbox
+export type DropdownMenuItem =
+  | DropdownMenuCheckboxOption
   | DropdownMenuDivider
   | DropdownMenuGroup
   | DropdownMenuLabel
-  | DropdownMenuOption
   | DropdownMenuRadioGroup
+  | DropdownMenuRenderOption
   | DropdownMenuRouteOption
+  | DropdownMenuSelectOption
   | DropdownMenuSubMenu

@@ -14,6 +14,7 @@ export interface ToastAction {
 }
 
 export interface Toast {
+  testId?: string
   title: string
   action?: ToastAction
   description?: string
