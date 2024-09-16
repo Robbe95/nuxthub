@@ -1,3 +1,5 @@
+import { accountService } from '@server/modules/auth/services/account.service'
+
 export default oauthGitHubEventHandler({
   onError(event, error) {
     console.error(error)
@@ -7,6 +9,8 @@ export default oauthGitHubEventHandler({
   async onSuccess(event, { user }) {
     await setUserSession(event, { user })
 
-    return sendRedirect(event, '/todos')
+    await accountService.createUserFromGithub(user)
+
+    return sendRedirect(event, '/')
   },
 })

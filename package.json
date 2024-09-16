@@ -15,7 +15,10 @@
     "lint:fix": "eslint . --fix",
     "clean": "rm -rf node_modules && rm -rf .output && rm -rf .nuxt",
     "precommit": "pnpm lint && pnpm typecheck && pnpm build",
-    "db:generate": "drizzle-kit generate"
+    "db:run": "tsx --tsconfig ./tsconfig.json node_modules/drizzle-kit/bin.cjs",
+    "db:generate": "pnpm db:run generate",
+    "db:studio": "pnpm db:run studio"
+
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.8",

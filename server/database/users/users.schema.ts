@@ -9,7 +9,7 @@ import {
 
 export const accounts = sqliteTable('accounts', {
   id: primaryId,
-  userId: text('user_id').notNull(),
+  providerId: text('provider_id').notNull(),
   provider: text('provider', { enum: [
     'github',
   ] }).notNull(),
@@ -17,7 +17,8 @@ export const accounts = sqliteTable('accounts', {
 
 export const users = sqliteTable('users', {
   id: primaryId,
-  createdAt: integer('id', { mode: 'timestamp' }).notNull().default(new Date()),
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(new Date()),
+  email: text('email').notNull(),
   firstName: text('first_name'),
   lastName: text('last_name'),
 })
@@ -28,7 +29,7 @@ export const usersToAccounts = sqliteTable(
     accountId: text('account_id')
       .notNull()
       .references(() => accounts.id),
-    userId: text('userId')
+    userId: text('user_id')
       .notNull()
       .references(() => users.id),
   },
