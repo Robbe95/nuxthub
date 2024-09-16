@@ -3,7 +3,7 @@ import {
   createString,
 } from '@base/mocks/utils.mock'
 import type { Address } from '@base/models/address/address.model'
-import { generateUuid } from '@base/utils/uuid/generateUuid.util'
+import { generateUuid } from '@shared/utils/uuid/generateUuid.util'
 
 export function createAddress(overrides: Partial<Address> = {}): Address {
   return {

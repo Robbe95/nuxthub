@@ -1,8 +1,8 @@
 import { createNumber, createString } from '@base/mocks/utils.mock'
 import type { Price } from '@base/models/price/price.model'
-import { generateUuid } from '@base/utils/uuid/generateUuid.util'
 import type { Product } from '@cart/models/product/detail/product.model'
 import type { ProductUuid } from '@cart/models/product/productUuid.model'
+import { generateUuid } from '@shared/utils/uuid/generateUuid.util'
 
 export function createProduct(overrides: Partial<Product> = {}): Product {
   return {

@@ -5,11 +5,11 @@ import {
   createNumber,
   createString,
 } from '@base/mocks/utils.mock'
-import { generateUuid } from '@base/utils/uuid/generateUuid.util'
 import { createOrderProducts } from '@cart/mocks/orderProduct.mock'
 import type { Order } from '@cart/models/order/detail/order.model'
 import { orderStatusSchema } from '@cart/models/order/orderStatus.model'
 import type { OrderUuid } from '@cart/models/order/orderUuid.model'
+import { generateUuid } from '@shared/utils/uuid/generateUuid.util'
 
 export function createRandomOrderStatus() {
   const statuses = Object.values(orderStatusSchema.Values)

@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     '@base': path.resolve(__dirname, './layers/base'),
     '@cart': path.resolve(__dirname, './layers/cart'),
     '@server': path.resolve(__dirname, './server'),
+    '@shared': path.resolve(__dirname, './shared'),
     '~~': path.resolve(__dirname, './disable'),
   },
 
@@ -58,6 +59,7 @@ export default defineNuxtConfig({
 
   hub: {
     blob: true,
+    database: true,
     kv: true,
   },
 
@@ -70,12 +72,12 @@ export default defineNuxtConfig({
     ],
   },
   imports: {
-    scan: false,
+    // scan: false,
   },
 
   modules: [
     '@nuxt/eslint',
-    '@nuxthub/core',
+    'nuxt-auth-utils',
   ],
 
   nitro: {

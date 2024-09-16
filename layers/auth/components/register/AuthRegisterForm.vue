@@ -11,6 +11,8 @@ const firstName = form.register('firstName')
 const lastName = form.register('lastName')
 const email = form.register('email')
 const phone = form.register('phone', '+32')
+const password = form.register('passwords.password')
+const passwordConfirmation = form.register('passwords.passwordConfirmation')
 </script>
 
 <template>
@@ -31,6 +33,18 @@ const phone = form.register('phone', '+32')
       v-bind="email"
       :label="t('shared.email')"
       :placeholder="t('shared.email')"
+      variant="auth"
+    />
+    <FormInput
+      v-bind="password"
+      :label="t('shared.password')"
+      :placeholder="t('shared.password')"
+      variant="auth"
+    />
+    <FormInput
+      v-bind="passwordConfirmation"
+      :label="t('shared.password_confirmation')"
+      :placeholder="t('shared.password_confirmation')"
       variant="auth"
     />
     <FormPhoneNumberInput

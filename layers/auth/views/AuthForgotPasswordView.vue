@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useAuthForgotPasswordMutation } from '@auth/api/mutations/authForgotPassword.mutation'
 import { forgotPasswordFormSchema } from '@auth/models/forgot-password/forgotPasswordForm.model'
 import { useAuthStore } from '@auth/stores/auth.store'
 import { useToast } from '@base/composables/core/toast.composable'
@@ -20,12 +19,8 @@ const { form, onSubmitForm } = useForm({
   schema: forgotPasswordFormSchema,
 })
 
-const forgotPasswordMutation = useAuthForgotPasswordMutation()
-
 onSubmitForm(async (values) => {
   try {
-    await forgotPasswordMutation.mutateAsync(values)
-
     hasResetPassword.value = true
     resetEmail.value = values.email
     toast.success({

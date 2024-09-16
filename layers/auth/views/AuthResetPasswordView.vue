@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useAuthResetPasswordMutation } from '@auth/api/mutations/authResetPassword.mutation'
 import { resetPasswordFormSchema } from '@auth/models/reset-password/resetPasswordForm.model'
 import { useToast } from '@wisemen/vue-core'
 import { useForm } from 'formango'
@@ -24,8 +23,6 @@ const route = useRoute('auth-reset-password')
 form.register('token', route.query.token as string)
 form.register('email', route.query.email as string)
 
-const resetPasswordMutation = useAuthResetPasswordMutation()
-
 const description = computed<string>(() => {
   if (hasPasswordBeenReset.value) {
     return t('auth.reset_password.success.description')
@@ -41,10 +38,8 @@ onSubmitFormError(() => {
   })
 })
 
-onSubmitForm(async (values) => {
+onSubmitForm(async (_values) => {
   try {
-    await resetPasswordMutation.mutateAsync(values)
-
     hasPasswordBeenReset.value = true
   }
   catch (error) {

@@ -6,6 +6,7 @@ export default withNuxt(
   ...(await WisemenEslintConfig),
   {
     ignores: [
+      '**/database/migrations',
       '**/layers/base/components/core/sonner/Toaster.vue',
     ],
   },

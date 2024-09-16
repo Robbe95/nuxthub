@@ -97,5 +97,9 @@
   "locale.fr": "Frans",
   "locale.nl": "Nederlands",
   "locale.en": "Engels",
-  "empty": "-"
+  "empty": "-",
+  "shared.password": "Wachtwoord",
+  "shared.password_confirmation": "Wachtwoord confirmatie",
+  "errors.passwords_do_not_match": "Wachtwoord komt niet overeen",
+  "errors.invalid_phone": "Foutief telefoonnummer"
 }

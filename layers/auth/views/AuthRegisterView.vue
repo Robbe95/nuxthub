@@ -1,21 +1,18 @@
 <script setup lang="ts">
-import { useAuthRegister } from '@auth/api/mutations/useAuthRegister'
 import { registerFormSchema } from '@auth/models/register/registerForm.model'
 import AppCollapseTransition from '@base/components/core/transitions/AppCollapseTransition.vue'
 import { useToast } from '@base/composables/core/toast.composable'
 import { useForm } from 'formango'
 
 const { t } = useI18n()
-const register = useAuthRegister()
 const toast = useToast()
 const { form, onSubmitForm } = useForm({
   schema: registerFormSchema,
 })
 const hasSubmitted = ref<boolean>(false)
 
-onSubmitForm(async (data) => {
+onSubmitForm((_data) => {
   try {
-    await register.mutateAsync(data)
     hasSubmitted.value = true
   }
   catch (error) {

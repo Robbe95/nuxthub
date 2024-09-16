@@ -33,6 +33,8 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@vueuse/nuxt',
     'nuxt-typed-router',
+    '@nuxthub/core',
+    'nuxt-auth-utils',
     '@nuxt/test-utils/module',
   ],
   runtimeConfig: {

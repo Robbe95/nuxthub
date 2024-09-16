@@ -1,40 +1,25 @@
-import { accounts, users } from '@server/database/schema'
-import { eq } from 'drizzle-orm'
-
 export const accountService = {
-  async getAccounts() {
+  async getUserWithAccountId(accountId: string) {
     const drizzle = useDrizzle()
 
-    const query = await drizzle
-      .select({
-        id: accounts.uuid,
-        userId: users.id,
-        email: users.email,
-        firstName: accounts.firstName,
-        lastName: accounts.lastName,
-      })
-      .from(accounts)
-      .leftJoin(users, eq(accounts.userId, users.id))
-      .execute()
+    const accountWithUser = await drizzle.query.accounts.findFirst({
+      where: (accounts, { eq }) => eq(accounts.id, accountId),
+      with: {
+        usersToAccounts: {
+          limit: 1,
+          with: {
+            user: true,
+          },
+        },
+      },
+    }).execute()
 
-    return query
-  },
-  async me(userUuid: string) {
-    const drizzle = useDrizzle()
+    const user = accountWithUser?.usersToAccounts?.[0]?.user
 
-    const query = await drizzle
-      .select({
-        id: accounts.uuid,
-        userId: users.id,
-        email: users.email,
-        firstName: accounts.firstName,
-        lastName: accounts.lastName,
-      })
-      .from(accounts)
-      .leftJoin(users, eq(accounts.userId, users.id))
-      .where(eq(accounts.userId, userUuid))
-      .execute()
+    if (user == null) {
+      throw new Error('No user found')
+    }
 
-    return query[0]
+    return user
   },
 }

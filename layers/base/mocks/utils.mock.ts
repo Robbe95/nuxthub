@@ -1,4 +1,4 @@
-import { generateUuid } from '@base/utils/uuid/generateUuid.util'
+import { generateUuid } from '@shared/utils/uuid/generateUuid.util'
 
 export function createString(length: number = 12): string {
   return Math.random().toString(36).substring(2, length + 2)
