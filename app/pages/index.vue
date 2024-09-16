@@ -27,8 +27,16 @@ onMounted(() => {
       to="http://localhost:3000/api/auth/github"
       external
     >
-      {{ `${123}login` }}
+      {{ `${`login`} with github` }}
     </NuxtLinkLocale>
+    <NuxtLinkLocale
+
+      to="http://localhost:3000/api/auth/google"
+      external
+    >
+      {{ `${`login`} with google` }}
+    </NuxtLinkLocale>
+
     {{ loggedIn }}
     {{ session }}
     <!-- <MockConstruction /> -->

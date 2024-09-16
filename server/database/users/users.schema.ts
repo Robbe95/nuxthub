@@ -9,9 +9,9 @@ import {
 
 export const accounts = sqliteTable('accounts', {
   id: primaryId,
-  providerId: text('provider_id').notNull(),
   provider: text('provider', { enum: [
     'github',
+    'google',
   ] }).notNull(),
 })
 

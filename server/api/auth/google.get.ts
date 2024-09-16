@@ -1,6 +1,6 @@
 import { accountService } from '@server/modules/auth/services/account.service'
 
-export default oauthGitHubEventHandler({
+export default oauthGoogleEventHandler({
   onError(event, error) {
     console.error(error)
 
@@ -9,7 +9,7 @@ export default oauthGitHubEventHandler({
   async onSuccess(event, { user }) {
     await setUserSession(event, { user })
 
-    await accountService.createUserFromProvider({ ...user, provider: 'github' })
+    await accountService.createUserFromProvider({ ...user, provider: 'google' })
 
     return sendRedirect(event, '/')
   },

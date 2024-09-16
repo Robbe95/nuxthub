@@ -1,12 +1,11 @@
 CREATE TABLE `accounts` (
 	`uuid` text PRIMARY KEY NOT NULL,
-	`provider_id` text NOT NULL,
 	`provider` text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `users` (
 	`uuid` text PRIMARY KEY NOT NULL,
-	`created_at` integer DEFAULT '"2024-09-16T13:42:26.854Z"' NOT NULL,
+	`created_at` integer DEFAULT '"2024-09-16T14:40:16.264Z"' NOT NULL,
 	`email` text NOT NULL,
 	`first_name` text,
 	`last_name` text

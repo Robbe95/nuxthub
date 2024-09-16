@@ -19,7 +19,7 @@ const { form, onSubmitForm } = useForm({
   schema: forgotPasswordFormSchema,
 })
 
-onSubmitForm(async (values) => {
+onSubmitForm((values) => {
   try {
     hasResetPassword.value = true
     resetEmail.value = values.email

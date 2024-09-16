@@ -8,7 +8,7 @@ export function getAuthMiddleware() {
       throw new TRPCError({ code: 'UNAUTHORIZED' })
     }
 
-    const user = await accountService.getUserWithAccountId(ctx.user.user.id)
+    const user = await accountService.getUserWithEmail(ctx.user.user.email)
 
     return next({
       ctx: {

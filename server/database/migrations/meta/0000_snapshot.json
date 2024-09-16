@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "de581bae-e4ee-4874-b7cf-bb3549686d23",
+  "id": "56dee055-d512-4f9a-94d9-14d5caa4f177",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "accounts": {
@@ -11,13 +11,6 @@
           "name": "uuid",
           "type": "text",
           "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "provider_id": {
-          "name": "provider_id",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
           "autoincrement": false
         },
@@ -50,7 +43,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'\"2024-09-16T13:42:26.854Z\"'"
+          "default": "'\"2024-09-16T14:40:16.264Z\"'"
         },
         "email": {
           "name": "email",

@@ -38,7 +38,7 @@ onSubmitFormError(() => {
   })
 })
 
-onSubmitForm(async (_values) => {
+onSubmitForm((_values) => {
   try {
     hasPasswordBeenReset.value = true
   }
