@@ -1,4 +1,3 @@
-import { generateUuid } from '@shared/utils/uuid/generateUuid.util'
-import { text } from 'drizzle-orm/sqlite-core'
+import { uuid } from 'drizzle-orm/pg-core'
 
-export const primaryId = text('uuid').$defaultFn(() => generateUuid()).notNull().primaryKey()
+export const primaryId = uuid('id').defaultRandom().primaryKey()

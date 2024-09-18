@@ -84,15 +84,14 @@ export default defineNuxtConfig({
     compressPublicAssets: {
       brotli: true,
     },
+    experimental: {
+      tasks: true,
+    },
     prerender: {
       failOnError: false,
     },
   },
   runtimeConfig: {
     dbUrl: import.meta.env.NUXT_DB_URL,
-    public: {
-      supabaseKey: import.meta.env.NUXT_SUPABASE_KEY,
-      supabaseUrl: import.meta.env.NUXT_SUPABASE_URL,
-    },
   },
 })

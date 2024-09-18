@@ -8,7 +8,6 @@ definePageMeta({
 const {
   loggedIn,
   session,
-
 } = useUserSession()
 
 useI18n()

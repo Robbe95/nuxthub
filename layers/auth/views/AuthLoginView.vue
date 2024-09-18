@@ -6,15 +6,10 @@ import { useToast } from '@base/composables/core/toast.composable'
 import { useForm } from 'formango'
 import { storeToRefs } from 'pinia'
 
-import { useSupabaseClient } from '~/api/useSupabaseClient'
-import { useTrpc } from '~/api/useTrpc'
-
 const authStore = useAuthStore()
 const localeRoute = useLocaleRoute()
-const supabase = useSupabaseClient()
 const isLoading = ref<boolean>(false)
 const { lastLoggedInUser } = storeToRefs(authStore)
-const { setSession } = useTrpc()
 
 const { t } = useI18n()
 const toast = useToast()
@@ -52,17 +47,6 @@ function handleLoginError(): void {
 onSubmitForm(async (data) => {
   try {
     isLoading.value = true
-
-    const response = await supabase.auth.signInWithPassword({
-      email: data.email,
-      password: data.password,
-    })
-
-    if (response.data.session?.access_token == null) {
-      throw new Error('No access token found in response')
-    }
-
-    setSession(response.data.session)
 
     const currentUser = await authStore.getCurrentUser()
 

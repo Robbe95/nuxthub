@@ -1,13 +1,13 @@
 import { primaryId } from '@server/database/uuid/primaryId.field'
 import { relations } from 'drizzle-orm'
 import {
-  integer,
-  primaryKey,
-  sqliteTable,
+  date,
+  pgTable,
   text,
-} from 'drizzle-orm/sqlite-core'
+  uuid,
+} from 'drizzle-orm/pg-core'
 
-export const accounts = sqliteTable('accounts', {
+export const accounts = pgTable('accounts', {
   id: primaryId,
   provider: text('provider', { enum: [
     'github',
@@ -15,30 +15,26 @@ export const accounts = sqliteTable('accounts', {
   ] }).notNull(),
 })
 
-export const users = sqliteTable('users', {
+export const users = pgTable('users', {
   id: primaryId,
-  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().default(new Date()),
+  createdAt: date('created_at').notNull().defaultNow(),
   email: text('email').notNull(),
   firstName: text('first_name'),
   lastName: text('last_name'),
+  newThing: text('new_thing').default('some default value'),
 })
 
-export const usersToAccounts = sqliteTable(
+export const usersToAccounts = pgTable(
   'users_to_accounts',
   {
-    accountId: text('account_id')
+    id: primaryId,
+    accountId: uuid('account_id')
       .notNull()
       .references(() => accounts.id),
-    userId: text('user_id')
+    userId: uuid('user_id')
       .notNull()
       .references(() => users.id),
   },
-  (t) => ({
-    pk: primaryKey({ columns: [
-      t.userId,
-      t.accountId,
-    ] }),
-  }),
 )
 
 export const userRelations = relations(users, ({ many }) => ({
