@@ -15,7 +15,7 @@ useI18n()
 onMounted(() => {
   const trpc = useTrpc()
 
-  trpc.trpc.auth.getMe.query()
+  void trpc.trpc.auth.getMe.query()
 })
 </script>
 
