@@ -21,6 +21,8 @@ export const icons = {
   eyeSlash: import('@base/icons/EyeSlashIcon.vue'),
   facebook: import('@base/icons/FacebookIcon.vue'),
   filterLines: import('@base/icons/FilterLinesIcon.vue'),
+  github: import('@base/icons/GithubIcon.vue'),
+  google: import('@base/icons/GoogleIcon.vue'),
   instagram: import('@base/icons/InstagramIcon.vue'),
   linkedIn: import('@base/icons/LinkedInIcon.vue'),
   minus: import('@base/icons/MinusIcon.vue'),

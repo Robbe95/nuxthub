@@ -1,29 +1,22 @@
+import { useMeQuery } from '@auth/api/queries/me.query'
+import { useGlobalI18n } from '@base/composables/i18n/useGlobaI18n'
 import { defineNuxtRouteMiddleware } from 'nuxt/app'
 
 export default defineNuxtRouteMiddleware(async () => {
-  // const authStore = useAuthStore()
-  // const { locale } = useGlobalI18n()
-  // const oAuthClient = useNuxtApp().$oAuthClient
-  // const localePath = `/${locale.value}`
+  const { locale } = useGlobalI18n()
+  const localePath = `/${locale.value}`
+  const loginRedirectPath = `${localePath}/auth/login`
 
-  // const loginRedirectPath = `${localePath}/auth/login`
-  // let userFound = true
+  try {
+    const meQuery = useMeQuery()
 
-  // try {
-  //   const hasTokens = oAuthClient.isLoggedIn()
+    await meQuery.suspense()
 
-  //   if (hasTokens == null) {
-  //     return navigateTo(loginRedirectPath)
-  //   }
-
-  //   await authStore.getCurrentUser()
-  // }
-  // catch (error) {
-  //   console.error(error)
-  //   userFound = false
-  // }
-
-  // if (!userFound) {
-  //   return navigateTo(loginRedirectPath)
-  // }
+    if (meQuery.error.value != null) {
+      throw new Error('Me query error')
+    }
+  }
+  catch {
+    return navigateTo(loginRedirectPath)
+  }
 })

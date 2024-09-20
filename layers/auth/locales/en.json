@@ -17,5 +17,7 @@
   "auth.reset_password.description": "Enter your new password below",
   "auth.reset_password.title": "Reset password",
   "auth.reset_password.success.action": "Return to login",
-  "auth.reset_password.success.description": "Your password has been reset successfully. You can now log in with your new password."
+  "auth.reset_password.success.description": "Your password has been reset successfully. You can now log in with your new password.",
+  "auth.login.login_with_google": "Login with Google",
+  "auth.login.login_with_github": "Login with Github"
 }

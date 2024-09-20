@@ -5,7 +5,7 @@ import { currentUserDtoSchema } from '@auth/models/current-user/currentUserDto.m
 import { useTrpc } from '~/api/useTrpc'
 
 export class AuthService {
-  static async getCurrentUser(): Promise<CurrentUser> {
+  static async getMe(): Promise<CurrentUser> {
     const { trpc } = useTrpc()
     const data = await trpc.auth.getMe.query()
     const currentUserDto = currentUserDtoSchema.parse(data)

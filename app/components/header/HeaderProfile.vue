@@ -1,21 +1,16 @@
 <script setup lang="ts">
-import type { CurrentUser } from '@auth/models/current-user/currentUser.model'
-import { useAuthStore } from '@auth/stores/auth.store'
+import { useMeQuery } from '@auth/api/queries/me.query'
 import { AppText } from '@wisemen/vue-core'
 import { PopoverClose } from 'radix-vue'
 
-const authStore = useAuthStore()
 const { t } = useI18n()
-const currentUser = computed<CurrentUser | null>(() => authStore.currentUser)
 
-function onLogout() {
-  void authStore.logout()
-}
+const { clear } = useUserSession()
+const meQuery = useMeQuery()
 </script>
 
 <template>
   <AppPopover
-    v-if="currentUser"
     align="center"
     hide-arrow
   >
@@ -31,13 +26,14 @@ function onLogout() {
             class="font-medium"
             variant="subtitle"
           >
-            {{ t('shared.hello', { name: currentUser.firstName }) }}
+            {{ t('shared.hello', { name: meQuery.data.value?.firstName }) }}
           </AppText>
 
           <PopoverClose :as-child="true">
             <AppButton
               class="w-full"
-              @click="onLogout"
+              variant="outline"
+              @click="clear"
             >
               {{ t('shared.logout') }}
             </AppButton>

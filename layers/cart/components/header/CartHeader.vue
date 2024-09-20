@@ -60,7 +60,7 @@ const isCartUpdating = computed<boolean>(() => {
                 'opacity-0': !isCartUpdating,
               }"
               icon="loading"
-              class="size-4 text-white duration-200"
+              class="size-4 text-foreground duration-200"
             />
           </div>
           <div class="flex gap-2">
@@ -72,7 +72,7 @@ const isCartUpdating = computed<boolean>(() => {
             </AppText>
             <AppText
               variant="caption"
-              class="font-bold text-white"
+              class="font-bold text-foreground"
             >
               {{ totalPrice ? formatPrice(totalPrice) : t('empty') }}
             </AppText>

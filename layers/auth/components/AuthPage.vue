@@ -6,9 +6,9 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="flex w-full flex-col pb-24">
+  <div class="flex w-full flex-col pb-24 text-foreground">
     <AppText
-      class="font-medium text-foreground"
+      class="font-medium"
       variant="title"
     >
       {{ props.title }}

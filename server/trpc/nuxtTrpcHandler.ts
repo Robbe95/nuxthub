@@ -6,6 +6,10 @@ export const nuxtHandler = createNuxtApiHandler({
   createContext,
   router: appRouter,
   onError: ({ error }) => {
+    if (error.code === 'UNAUTHORIZED') {
+      return
+    }
+
     console.error(error)
   },
 })

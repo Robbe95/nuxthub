@@ -1,24 +1,9 @@
 <script setup lang="ts">
 import { ConfigProvider } from 'radix-vue'
 
-// const authStore = useAuthStore()
-
 function useIdFunction() {
-  return useId()
+  return useId() as string
 }
-
-// async function fetchUser() {
-//   try {
-//     await authStore.getCurrentUser()
-//   }
-//   catch {
-//     console.error('NO CURRENT USER')
-//   }
-// }
-
-// onMounted(async () => {
-//   await fetchUser()
-// })
 </script>
 
 <template>

@@ -4,7 +4,7 @@ import { TRPCError } from '@trpc/server'
 
 export function getAuthMiddleware() {
   return t.middleware(async ({ ctx, next }) => {
-    if (ctx.user?.user?.id == null) {
+    if (ctx.user?.user?.email == null) {
       throw new TRPCError({ code: 'UNAUTHORIZED' })
     }
 

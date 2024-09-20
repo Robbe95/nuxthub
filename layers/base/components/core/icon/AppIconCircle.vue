@@ -15,7 +15,7 @@ const attrs = useAttrs()
 </script>
 
 <template>
-  <div :class="twMerge('flex size-8 flex-none items-center justify-center rounded-full bg-white', attrs?.class as string)">
+  <div :class="twMerge('flex size-8 flex-none items-center justify-center rounded-full bg-background text-foreground', attrs?.class as string)">
     <Transition
       name="fade"
     >

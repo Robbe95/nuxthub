@@ -6,6 +6,6 @@
       </div>
     </div>
 
-    <div class="bg-black" />
+    <div class="bg-white" />
   </div>
 </template>

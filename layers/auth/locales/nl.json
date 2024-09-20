@@ -35,5 +35,7 @@
   "auth.back_to_login": "Terug naar aanmelden",
   "seo.title.auth": "Authenticatie",
   "auth.forgot_password.error_title": "Er is iets foutgelopen",
-  "auth.forgot_password.error_description": "Controleer uw gegevens en probeer opnieuw"
+  "auth.forgot_password.error_description": "Controleer uw gegevens en probeer opnieuw",
+  "auth.login.login_with_google": "Inloggen met Google",
+  "auth.login.login_with_github": "Log in met Github"
 }

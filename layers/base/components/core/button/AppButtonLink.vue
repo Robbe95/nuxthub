@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { Icon } from '@wisemen/vue-core'
-import { AppIcon } from '@wisemen/vue-core'
+import type { Icon } from '@base/icons/icons'
 import type { RouteLocationRaw } from 'vue-router'
 
 import type { ButtonStyleProps } from './button.style'
@@ -17,6 +16,7 @@ export interface AppButtonProps {
    * @default false
    */
   isLoading?: boolean
+  external?: boolean
   /**
    * The icon to display on the left side of the button.
    * @default null
@@ -83,6 +83,7 @@ const buttonRightIconClasses = computed<string>(() =>
     :type="props.type"
     :to="props.to"
     :class="buttonClasses"
+    :external="props.external"
   >
     <AppIcon
       v-if="props.iconLeft !== null && props.iconLeft !== undefined"

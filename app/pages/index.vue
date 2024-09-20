@@ -1,44 +1,12 @@
 <script setup lang="ts">
-import { useTrpc } from '~/api/useTrpc'
-
 definePageMeta({
-  // middleware: 'auth-middleware',
-})
-
-const {
-  loggedIn,
-  session,
-} = useUserSession()
-
-useI18n()
-
-onMounted(() => {
-  const trpc = useTrpc()
-
-  void trpc.trpc.auth.getMe.query()
+  middleware: 'auth-middleware',
 })
 </script>
 
 <template>
   <div class="w-full">
-    <NuxtLinkLocale
-
-      to="http://localhost:3000/api/auth/github"
-      external
-    >
-      {{ `${`login`} with github` }}
-    </NuxtLinkLocale>
-    <NuxtLinkLocale
-
-      to="http://localhost:3000/api/auth/google"
-      external
-    >
-      {{ `${`login`} with google` }}
-    </NuxtLinkLocale>
-
-    {{ loggedIn }}
-    {{ session }}
-    <!-- <MockConstruction /> -->
+    <MockConstruction />
   </div>
 </template>
 
