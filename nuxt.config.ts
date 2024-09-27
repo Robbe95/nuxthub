@@ -5,6 +5,7 @@ export default defineNuxtConfig({
 
   alias: {
     '@@': path.resolve(__dirname, './disable'),
+    '@admin': path.resolve(__dirname, './layers/admin'),
     '@auth': path.resolve(__dirname, './layers/auth'),
     '@base': path.resolve(__dirname, './layers/base'),
     '@cart': path.resolve(__dirname, './layers/cart'),
