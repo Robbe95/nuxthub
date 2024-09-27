@@ -11,6 +11,8 @@ type CrudProps = EntityCrudParams<
 >
 
 const props = defineProps<CrudProps>()
+
+const crud = useEntityCrud(props)
 </script>
 
 <template>

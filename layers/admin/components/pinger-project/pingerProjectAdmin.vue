@@ -13,9 +13,6 @@ const crud = useEntityCrud({
   post: usePostPingerProjectsMutation,
   update: usePostPingerProjectsMutation,
 
-  onDelete: (payload) => {
-    console.log(payload)
-  },
 })
 
 crud
