@@ -18,6 +18,14 @@ export const pingerUrl = pgTable('pinger_url', {
   url: text('url'),
 })
 
-export const pingerUrlRelations = relations(pingerUrl, ({ many }) => ({
+export const pingerUrlRelations = relations(pingerUrl, ({ many, one }) => ({
   pingerPings: many(pingerPing),
+  pingerProject: one(pingerProject, {
+    fields: [
+      pingerUrl.id,
+    ],
+    references: [
+      pingerProject.id,
+    ],
+  }),
 }))

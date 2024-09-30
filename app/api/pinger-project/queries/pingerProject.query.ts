@@ -16,11 +16,11 @@ export function useGetPingerProjectsQuery() {
   })
 };
 
-export function useGetPingerProjectByUuidQuery(uuid: PingerProjectId) {
+export function useGetPingerProjectByUuidQuery(uuid: MaybeRefOrGetter<PingerProjectId>) {
   return useQuery({
     queryFn: async () => {
       const user = await pingerProjectService.getPingerProjectByUuid({
-        pingerProjectId: uuid,
+        pingerProjectId: toValue(uuid),
       })
 
       return user

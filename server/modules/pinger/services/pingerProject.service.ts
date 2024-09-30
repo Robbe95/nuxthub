@@ -11,12 +11,10 @@ export const pingerProjectService = {
   async delete(payload: DeletePingerProjectPayload) {
     const drizzle = useDrizzle()
 
-    const query = await drizzle
+    await drizzle
       .delete(pingerProject)
       .where(eq(pingerProject.id, payload.pingerProjectId))
       .execute()
-
-    return query
   },
 
   async getAll() {
@@ -75,9 +73,10 @@ export const pingerProjectService = {
         name: payload.name,
       })
       .where(eq(pingerProject.id, payload.pingerProjectId))
+      .returning()
       .execute()
 
-    return query
+    return query[0]
   },
 
 }

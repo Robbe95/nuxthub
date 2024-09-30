@@ -11,9 +11,7 @@ export const pingerProjectService = {
   async deletePingerProject(payload: DeletePingerProjectPayload) {
     const { trpc } = useTrpc()
 
-    const data = await trpc.pinger.deletePingerProject.mutate(payload)
-
-    return data
+    await trpc.pinger.deletePingerProject.mutate(payload)
   },
 
   async getPingerProjectByUuid(payload: GetByUuidPingerProjectPayload) {

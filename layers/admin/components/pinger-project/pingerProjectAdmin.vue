@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { usePostPingerProjectsMutation } from '~/api/pinger-project/mutations/pingerProject.mutation'
+import {
+  useDeletePingerProjectMutation,
+  usePostPingerProjectsMutation,
+} from '~/api/pinger-project/mutations/pingerProject.mutation'
 import {
   useGetPingerProjectByUuidQuery,
   useGetPingerProjectsQuery,
@@ -7,19 +10,28 @@ import {
 
 const crud = useEntityCrud({
   getById: useGetPingerProjectByUuidQuery,
-  delete: usePostPingerProjectsMutation,
+  delete: useDeletePingerProjectMutation,
   entityName: 'name',
   getAll: useGetPingerProjectsQuery,
   post: usePostPingerProjectsMutation,
   update: usePostPingerProjectsMutation,
-
 })
 
-crud
+crud.onDelete(({ data, mutation }) => {
+  void mutation.mutateAsync({
+    pingerProjectId: data.id,
+  })
+})
+
+const test = crud.getAll()
 </script>
 
 <template>
-  <div>
-    <slot />
+  <div class="text-foreground">
+    HERE DATA
+    <AdminEntityCreate v-bind="crud" />
+    <div>
+      {{ test.data }}
+    </div>
   </div>
 </template>

@@ -10,7 +10,7 @@ import {
 export const pingerProject = pgTable('pinger_project', {
   id: primaryId,
   createdAt: date('created_at').notNull().defaultNow(),
-  name: text('name'),
+  name: text('name').notNull(),
 })
 
 export const pingerProjectRelations = relations(pingerProject, ({ many }) => ({

@@ -14,7 +14,7 @@ export interface EntityCrudParams<
   getById: (payload: TDetailParams) =>
   UseQueryReturnType<TEntityDetailShape, any>
   delete: () =>
-  UseMutationReturnType<NoInfer<TEntityDetailShape>, unknown, TDeleteParams, unknown, unknown>
+  UseMutationReturnType<void, unknown, TDeleteParams, unknown, unknown>
   entityName: string
   getAll: () =>
   UseQueryReturnType<TEntityIndexShape[], any>
@@ -24,16 +24,18 @@ export interface EntityCrudParams<
   UseMutationReturnType<NoInfer<TEntityDetailShape>, unknown, TUpdateParams, unknown, unknown>
 }
 
-type OnDeleteCallback<TEntity> = ({ data }: {
-  data: TEntity
+type OnDeleteCallback<TEntity, TDeleteParams> = ({ data, mutation }: {
+  data: NonNullable<TEntity>
+  mutation: UseMutationReturnType<void, unknown, TDeleteParams, unknown, unknown>
 }) => MaybePromise<void>
 
-type OnPostCallback<TEntity> = ({ data }: {
-  data: TEntity
+type OnPostCallback<TEntity, TPostParams> = ({ mutation }: {
+  mutation: UseMutationReturnType<NoInfer<TEntity>, unknown, TPostParams, unknown, unknown>
 }) => MaybePromise<void>
 
-type OnUpdateCallback<TEntity> = ({ data }: {
-  data: TEntity
+type OnUpdateCallback<TEntity, TUpdateParams> = ({ data, mutation }: {
+  data: NonNullable<TEntity>
+  mutation: UseMutationReturnType<NoInfer<TEntity>, unknown, TUpdateParams, unknown, unknown>
 }) => MaybePromise<void>
 
 export function useEntityCrud<
@@ -53,66 +55,70 @@ export function useEntityCrud<
     TDeleteParams
   >,
 ) {
-  let onDeleteCb: OnDeleteCallback<TEntityDetailShape> | null = null
-  let onPostCb: OnPostCallback<TEntityDetailShape> | null = null
-  let onUpdateCb: OnUpdateCallback<TEntityDetailShape> | null = null
+  let onDeleteCb: OnDeleteCallback<TEntityDetailShape, TDeleteParams> | null = null
+  let onPostCb: OnPostCallback<TEntityDetailShape, TPostParams> | null = null
+  let onUpdateCb: OnUpdateCallback<TEntityDetailShape, TUpdateParams> | null = null
   const currentEntity: TEntityDetailShape | null = null
   const currentEntities: TEntityIndexShape[] | null = null
 
-  function getDeleteParams(payload: TDeleteParams) {
-    return payload
-  }
-
-  function onDelete(cb: OnDeleteCallback<TEntityDetailShape>) {
+  function onDelete(cb: OnDeleteCallback<TEntityDetailShape, TDeleteParams>) {
     onDeleteCb = cb
   }
 
-  function onPost(cb: OnPostCallback<TEntityDetailShape>) {
+  function onPost(cb: OnPostCallback<TEntityDetailShape, TPostParams>) {
     onPostCb = cb
   }
 
-  function onUpdate(cb: OnUpdateCallback<TEntityDetailShape>) {
+  function onUpdate(cb: OnUpdateCallback<TEntityDetailShape, TUpdateParams>) {
     onUpdateCb = cb
   }
 
-  async function deleteEntity(params: TDeleteParams) {
-    const deleteMutation = payload.delete()
+  async function deleteEntity() {
+    if (currentEntity == null) {
+      throw new Error('No current entity found')
+    }
 
-    const response = await deleteMutation.mutateAsync(params)
+    const deleteMutation = payload.delete()
 
     if (onDeleteCb != null) {
       await onDeleteCb({
-        data: response,
+        data: currentEntity,
+        mutation: deleteMutation,
       })
     }
   }
 
-  async function postEntity(params: TPostParams) {
+  async function postEntity() {
     const postMutation = payload.post()
-
-    const response = await postMutation.mutateAsync(params)
 
     if (onPostCb != null) {
       await onPostCb({
-        data: response,
+        mutation: postMutation,
       })
     }
   }
 
-  async function updateEntity(params: TUpdateParams) {
-    const updateMutation = payload.update()
+  async function updateEntity() {
+    if (currentEntity == null) {
+      throw new Error('No current entity found')
+    }
 
-    const response = await updateMutation.mutateAsync(params)
+    const updateMutation = payload.update()
 
     if (onUpdateCb != null) {
       await onUpdateCb({
-        data: response,
+        data: currentEntity,
+        mutation: updateMutation,
       })
     }
   }
 
   return {
+    getById: payload.getById,
+    currentEntities,
+    currentEntity,
     deleteEntity,
+    getAll: payload.getAll,
     postEntity,
     updateEntity,
     onDelete,

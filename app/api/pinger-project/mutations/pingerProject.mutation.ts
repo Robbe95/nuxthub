@@ -10,9 +10,9 @@ import { pingerProjectService } from '~/api/pinger-project/service/pingerProject
 export function usePostPingerProjectsMutation() {
   return useMutation({
     mutationFn: async (payload: PostPingerProjectPayload) => {
-      const user = await pingerProjectService.postPingerProject(payload)
+      const response = await pingerProjectService.postPingerProject(payload)
 
-      return user
+      return response
     },
   })
 };
@@ -20,9 +20,9 @@ export function usePostPingerProjectsMutation() {
 export function useUpdatePingerProjectMutation() {
   return useMutation({
     mutationFn: async (payload: UpdatePingerProjectPayload) => {
-      const user = await pingerProjectService.updatePingerProject(payload)
+      const response = await pingerProjectService.updatePingerProject(payload)
 
-      return user
+      return response
     },
   })
 };
@@ -30,9 +30,9 @@ export function useUpdatePingerProjectMutation() {
 export function useDeletePingerProjectMutation() {
   return useMutation({
     mutationFn: async (payload: DeletePingerProjectPayload) => {
-      const user = await pingerProjectService.deletePingerProject(payload)
+      const response = await pingerProjectService.deletePingerProject(payload)
 
-      return user
+      return response
     },
   })
 };

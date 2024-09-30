@@ -2,9 +2,11 @@ import { pingerProjectService } from '@server/modules/pinger/services/pingerProj
 import { authProcedure } from '@server/trpc/trpc'
 import {
   deletePingerProjectPayload,
+  pingerProjectResponse,
   postPingerProjectPayload,
   updatePingerProjectPayload,
 } from '@shared/models/pinger-project/pingerProject.schema'
+import { pingerProjectTransformer } from '@shared/models/pinger-project/pingerProject.transformer'
 
 export const deletePingerProject = authProcedure
   .input(deletePingerProjectPayload)
@@ -14,12 +16,18 @@ export const deletePingerProject = authProcedure
 
 export const postPingerProject = authProcedure
   .input(postPingerProjectPayload)
-  .mutation(({ input }) => {
-    return pingerProjectService.post(input)
+  .output(pingerProjectResponse)
+  .mutation(async ({ input }) => {
+    const response = await pingerProjectService.post(input)
+
+    return pingerProjectTransformer.toResponse(response)
   })
 
 export const updatePingerProject = authProcedure
   .input(updatePingerProjectPayload)
-  .mutation(({ input }) => {
-    return pingerProjectService.update(input)
+  .output(pingerProjectResponse)
+  .mutation(async ({ input }) => {
+    const response = await pingerProjectService.update(input)
+
+    return pingerProjectTransformer.toResponse(response)
   })

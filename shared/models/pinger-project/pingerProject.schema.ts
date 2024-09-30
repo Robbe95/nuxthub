@@ -16,8 +16,14 @@ export const getByUuidPingerProjectPayload = z.object({
   pingerProjectId,
 })
 
+export const pingerProjectResponse = z.object({
+  id: pingerProjectId,
+  name: z.string(),
+})
+
 export type PingerProjectId = z.infer<typeof pingerProjectId>
 export type PostPingerProjectPayload = z.infer<typeof postPingerProjectPayload>
 export type UpdatePingerProjectPayload = z.infer<typeof updatePingerProjectPayload>
 export type DeletePingerProjectPayload = z.infer<typeof deletePingerProjectPayload>
 export type GetByUuidPingerProjectPayload = z.infer<typeof getByUuidPingerProjectPayload>
+export type PingerProjectResponse = z.infer<typeof pingerProjectResponse>

@@ -22,6 +22,13 @@
       "when": 1727369667624,
       "tag": "0002_aromatic_pretty_boy",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1727703226948,
+      "tag": "0003_white_the_anarchist",
+      "breakpoints": true
     }
   ]
 }

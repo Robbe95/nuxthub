@@ -23,3 +23,6 @@ export function useDrizzle() {
 
 export type Account = typeof schema.accounts.$inferSelect
 export type User = typeof schema.users.$inferSelect
+export type PingerProject = typeof schema.pingerProject.$inferSelect
+export type PingerUrl = typeof schema.pingerUrl.$inferSelect
+export type PingerPing = typeof schema.pingerPing.$inferSelect
