@@ -1,14 +1,14 @@
 import { pingerProjectService } from '@server/modules/pinger/services/pingerProject.service'
 import { authProcedure } from '@server/trpc/trpc'
 import {
-  getByUuidPingerProjectPayload,
-  pingerProjectResponse,
+  getByUuidPingerProjectPayloadSchema,
+  pingerProjectResponseSchema,
 } from '@shared/models/pinger-project/pingerProject.schema'
 import { pingerProjectTransformer } from '@shared/models/pinger-project/pingerProject.transformer'
 import { TRPCError } from '@trpc/server'
 
 export const getPingerProjects = authProcedure
-  .output(pingerProjectResponse.array())
+  .output(pingerProjectResponseSchema.array())
   .query(async () => {
     const response = await pingerProjectService.getAll()
 
@@ -16,8 +16,8 @@ export const getPingerProjects = authProcedure
   })
 
 export const getPingerProjectByUuid = authProcedure
-  .input(getByUuidPingerProjectPayload)
-  .output(pingerProjectResponse)
+  .input(getByUuidPingerProjectPayloadSchema)
+  .output(pingerProjectResponseSchema)
   .query((async ({ input }) => {
     const response = await pingerProjectService.getByUuid(input.pingerProjectId)
 

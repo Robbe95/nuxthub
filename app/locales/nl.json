@@ -7,5 +7,7 @@
   "footer.privacy_policy": "Privacy Policy",
   "footer.service": "Service",
   "footer.links": "Links",
-  "todo.logo": "TODO logo"
+  "todo.logo": "TODO logo",
+  "admin.pinger_project.create.info.title": "Info",
+  "admin.pinger_project.create.info.description": "Informatie van het project"
 }

@@ -6,7 +6,7 @@ interface Props {
 }
 const { direction = 'horizontal' } = defineProps<Props>()
 const dividerStyle = tv({
-  base: 'bg-neutral-100',
+  base: 'bg-neutral-500',
   variants: {
     direction: {
       horizontal: 'h-px w-full',

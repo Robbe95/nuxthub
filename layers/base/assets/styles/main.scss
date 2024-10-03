@@ -43,9 +43,9 @@
 
     --button-outline-border: 208, 213, 221;
     --border: 229, 233, 240;
-    --input: 255, 255, 255;
+    --input: 0, 0, 0;
 
-    --form-label-foreground: 61, 70, 88;
+    --form-label-foreground: 255, 255, 255;
     --form-label-font-weight: 500;
 
     --neutral-100: 245, 245, 245;
@@ -58,13 +58,13 @@
     --neutral-800: 38, 38, 38;
     --neutral-900: 23, 23, 23;
 
-    --ring: 127, 86, 217;
+    --ring: 255, 255, 255;
 
-    --input-foreground: 0, 0, 56;
-    --input-placeholder: 192, 196, 204;
+    --input-foreground: 255, 255, 255;
+    --input-placeholder: 150, 150, 150;
     --input-disabled: 253, 253, 253;
-    --input-border: 208, 213, 221;
-    --input-ring: 172, 180, 219;
+    --input-border: 50, 50, 50;
+    --input-ring: 255, 255, 255;
 
     --switch-background: 240, 240, 240;
     --switch-foreground: 255, 255, 255;
@@ -224,7 +224,7 @@
 
 @layer utilities {
   .focus-ring:focus-within {
-    @apply ring-2 ring-offset-2 ring-ring outline-none duration-200;
+    @apply ring-2 ring-offset-2 ring-ring ring-offset-background outline-none duration-200;
   }
 }
 
