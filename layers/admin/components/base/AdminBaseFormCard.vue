@@ -9,7 +9,7 @@
       </p>
     </div>
     <AppDivider direction="vertical" />
-    <div>
+    <div class="grid grid-cols-2 gap-4">
       <slot name="form" />
     </div>
   </div>

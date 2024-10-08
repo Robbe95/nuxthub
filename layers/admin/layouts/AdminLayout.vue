@@ -1,13 +1,18 @@
 <script setup lang="ts">
-
+const hideBar = ref<boolean>(false)
 </script>
 
 <template>
   <div>
     <div class="flex min-h-screen flex-col">
       <TheAdminHeader />
-      <div class="container relative z-0 mx-auto flex w-full flex-1 flex-col items-center justify-center px-4">
-        <slot />
+      <div
+        class="relative z-0 mx-auto flex size-full flex-1 gap-4 transition-all duration-200 "
+      >
+        <AppSidebar v-if="!hideBar" />
+        <div class="p-8 transition-all duration-200">
+          <slot />
+        </div>
       </div>
     </div>
   </div>

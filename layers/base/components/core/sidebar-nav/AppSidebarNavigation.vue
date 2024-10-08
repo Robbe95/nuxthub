@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import AppIcon from '@base/components/core/icon/AppIcon.vue'
-import type { Icon } from '@base/icons/icons'
-import type { KeyboardShortcut } from '@base/types/core/keyboardShortcut.type'
-import type { NavigationItem } from '@base/types/core/navigationItem.type'
 import type {
-  RouteLocationTyped,
-  Routes,
-} from '@base/types/core/routes.type.js'
+  NavigationItem,
+  NavigationItemOption,
+} from '@base/types/core/navigationItem.type'
 import { computed, ref } from 'vue'
 
 import AppSidebarNavigationGroup from './AppSidebarNavigationGroup.vue'
@@ -24,8 +21,7 @@ defineSlots<{
   /** Add content for navigations items' tooltip */
   content: (props: {
     isOpen: boolean
-    keyboardShortcut?: KeyboardShortcut
-    label: string
+    navigationItem: NavigationItemOption
   }) => any
   /** Add content for the sidebar's footer */
   footer: (props: {
@@ -38,9 +34,7 @@ defineSlots<{
   /** Add content for navigations items' trigger */
   trigger: (props: {
     isOpen: boolean
-    icon: Icon
-    label: string
-    to: RouteLocationTyped<keyof Routes>
+    navigationItem: NavigationItemOption
   }) => any
 }>()
 
@@ -51,9 +45,9 @@ const isOpen = ref<boolean>(false)
 const containerClosedClasses = computed<string>(() => sidebarNavStyle.containerClosed())
 const containerOpenClasses = computed<string>(() => sidebarNavStyle.containerOpen())
 const toggleButtonClasses = computed<string>(() => sidebarNavStyle.toggleButton())
-const toggleButtonIconClasses = computed<string>(() => sidebarNavStyle.toggleButtonIcon())
 const navClasses = computed<string>(() => sidebarNavStyle.nav())
 const itemsListClasses = computed<string>(() => sidebarNavStyle.itemsList())
+const headerClasses = computed<string>(() => sidebarNavStyle.header())
 
 function toggleSidebar(): void {
   isOpen.value = !isOpen.value
@@ -64,7 +58,7 @@ function toggleSidebar(): void {
   <div
     :class="isOpen ? containerOpenClasses : containerClosedClasses"
   >
-    <div>
+    <div :class="headerClasses">
       <slot
         :is-open="isOpen"
         name="header"
@@ -76,7 +70,6 @@ function toggleSidebar(): void {
     >
       <AppIcon
         :icon="isOpen ? 'chevronLeft' : 'chevronRight'"
-        :class="toggleButtonIconClasses"
       />
     </button>
     <nav :class="navClasses">
@@ -90,20 +83,17 @@ function toggleSidebar(): void {
             v-if="item.type === 'option'"
             :item="item"
           >
-            <template #trigger="{ icon, label, to }">
+            <template #trigger="{ navigationItem }">
               <slot
-                :label="label"
-                :icon="icon"
+                :navigation-item="navigationItem"
                 :is-open="isOpen"
-                :to="to"
                 name="trigger"
               />
             </template>
-            <template #content="{ label, keyboardShortcut }">
+            <template #content="{ navigationItem }">
               <slot
-                :label="label"
+                :navigation-item="navigationItem"
                 :is-open="isOpen"
-                :keyboard-shortcut="keyboardShortcut"
                 name="content"
               />
             </template>
@@ -118,20 +108,17 @@ function toggleSidebar(): void {
               :key="option.label"
               :item="option"
             >
-              <template #trigger="{ icon, label, to }">
+              <template #trigger="{ navigationItem }">
                 <slot
-                  :label="label"
-                  :icon="icon"
+                  :navigation-item="navigationItem"
                   :is-open="isOpen"
-                  :to="to"
                   name="trigger"
                 />
               </template>
-              <template #content="{ label, keyboardShortcut }">
+              <template #content="{ navigationItem }">
                 <slot
-                  :label="label"
+                  :navigation-item="navigationItem"
                   :is-open="isOpen"
-                  :keyboard-shortcut="keyboardShortcut"
                   name="content"
                 />
               </template>

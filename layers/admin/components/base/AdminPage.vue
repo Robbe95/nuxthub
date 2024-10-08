@@ -3,5 +3,5 @@
     <div class="w-full">
       <slot />
     </div>
-    
+  </div>
 </template>
